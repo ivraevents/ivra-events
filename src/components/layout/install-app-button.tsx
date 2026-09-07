@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Download, Share2, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /** Minimal shape of the (non-standard, Chromium-only) beforeinstallprompt event. */
 interface BeforeInstallPromptEvent extends Event {
@@ -24,7 +25,7 @@ function isStandaloneDisplay() {
  *   sheet.
  * - Already installed / unsupported browser: renders nothing.
  */
-export function InstallAppButton() {
+export function InstallAppButton({ dark = false }: { dark?: boolean }) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(() => isStandaloneDisplay());
   const [isIOS] = useState(
@@ -70,7 +71,10 @@ export function InstallAppButton() {
         onClick={handleClick}
         title="Add to Home Screen"
         aria-label="Add to Home Screen"
-        className="flex h-9 w-9 items-center justify-center rounded-full text-charcoal-500 hover:bg-surface-muted"
+        className={cn(
+          "flex h-9 w-9 items-center justify-center rounded-full",
+          dark ? "text-cloud-300 hover:bg-white/10" : "text-charcoal-500 hover:bg-surface-muted"
+        )}
       >
         <Download className="h-4 w-4" />
       </button>

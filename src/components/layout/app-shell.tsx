@@ -108,51 +108,79 @@ export function AppShell({
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-surface/90 px-4 backdrop-blur sm:px-6">
-          <button
-            className="rounded-md p-2 text-charcoal-500 hover:bg-surface-muted lg:hidden"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-          <div className="hidden lg:block" />
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <LanguageSwitcher variant="light" />
-            <InstallAppButton />
-            <NotificationBell />
-            <div className="relative">
-              <button
-                onClick={() => setMenuOpen((o) => !o)}
-                className="flex items-center gap-2 rounded-full border border-border bg-surface px-2 py-1.5 text-sm hover:bg-surface-muted"
-              >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-navy-900 text-xs font-semibold text-white">
-                  {userLabel.charAt(0).toUpperCase()}
-                </span>
-                <span className="hidden max-w-[10rem] truncate text-sm font-medium sm:inline">{userLabel}</span>
-                <ChevronDown className="h-3.5 w-3.5 text-charcoal-500" />
-              </button>
-              {menuOpen && (
-                <div className="absolute right-0 z-40 mt-2 w-56 rounded-[var(--radius-md)] border border-border bg-surface p-1 shadow-[var(--shadow-elevated)]">
-                  <div className="px-3 py-2 text-xs text-muted-foreground truncate">{userEmail}</div>
-                  <Link
-                    href="/profile"
-                    className="block rounded-[var(--radius-sm)] px-3 py-2 text-sm hover:bg-surface-muted"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Profile settings
-                  </Link>
-                  <button
-                    onClick={signOut}
-                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-left text-sm text-error-600 hover:bg-error-100"
-                  >
-                    <LogOut className="h-4 w-4" /> Sign out
-                  </button>
-                </div>
-              )}
+        {navKind === "admin" ? (
+          <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-surface/90 px-4 backdrop-blur sm:px-6">
+            <button
+              className="rounded-md p-2 text-charcoal-500 hover:bg-surface-muted lg:hidden"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <div className="hidden lg:block" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <InstallAppButton />
+              <NotificationBell />
+              <div className="relative">
+                <button
+                  onClick={() => setMenuOpen((o) => !o)}
+                  className="flex items-center gap-2 rounded-full border border-border bg-surface px-2 py-1.5 text-sm hover:bg-surface-muted"
+                >
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-navy-900 text-xs font-semibold text-white">
+                    {userLabel.charAt(0).toUpperCase()}
+                  </span>
+                  <span className="hidden max-w-[10rem] truncate text-sm font-medium sm:inline">{userLabel}</span>
+                  <ChevronDown className="h-3.5 w-3.5 text-charcoal-500" />
+                </button>
+                {menuOpen && (
+                  <div className="absolute right-0 z-40 mt-2 w-56 rounded-[var(--radius-md)] border border-border bg-surface p-1 shadow-[var(--shadow-elevated)]">
+                    <div className="px-3 py-2 text-xs text-muted-foreground truncate">{userEmail}</div>
+                    <Link
+                      href="/profile"
+                      className="block rounded-[var(--radius-sm)] px-3 py-2 text-sm hover:bg-surface-muted"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Profile settings
+                    </Link>
+                    <button
+                      onClick={signOut}
+                      className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-left text-sm text-error-600 hover:bg-error-100"
+                    >
+                      <LogOut className="h-4 w-4" /> Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        ) : (
+          // User app header: dark, matching the sidebar/bottom-nav chrome.
+          // No account dropdown here — Profile is its own bottom-nav tab,
+          // and Sign out lives at the bottom of the Profile page instead,
+          // so there's only ever one way to reach either.
+          <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-navy-800 bg-navy-950 px-4 sm:px-6">
+            <button
+              className="rounded-md p-2 text-cloud-300 hover:bg-white/10 lg:hidden"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <div className="hidden lg:block" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <LanguageSwitcher variant="dark" />
+              <InstallAppButton dark />
+              <NotificationBell dark />
+              <Link
+                href="/profile"
+                aria-label="Profile"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-800 text-xs font-semibold text-white ring-1 ring-white/10 hover:ring-gold-400"
+              >
+                {userLabel.charAt(0).toUpperCase()}
+              </Link>
+            </div>
+          </header>
+        )}
         <main className="flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">{children}</main>
       </div>
 

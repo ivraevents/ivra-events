@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Bell } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, cn } from "@/lib/utils";
 
 interface NotificationRow {
   id: string;
@@ -15,7 +15,7 @@ interface NotificationRow {
   created_at: string;
 }
 
-export function NotificationBell() {
+export function NotificationBell({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<NotificationRow[]>([]);
   const [unread, setUnread] = useState(0);
@@ -58,7 +58,10 @@ export function NotificationBell() {
     <div className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="relative rounded-full p-2 text-charcoal-500 hover:bg-surface-muted"
+        className={cn(
+          "relative rounded-full p-2",
+          dark ? "text-cloud-300 hover:bg-white/10" : "text-charcoal-500 hover:bg-surface-muted"
+        )}
         aria-label="Notifications"
       >
         <Bell className="h-5 w-5" />
