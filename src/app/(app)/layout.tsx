@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/layout/app-shell";
-import { userNav } from "@/components/layout/nav-items";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -18,7 +17,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <AppShell
-      nav={userNav}
+      navKind="user"
       userLabel={profile?.full_name || profile?.email || "Account"}
       userEmail={profile?.email || user.email || ""}
     >

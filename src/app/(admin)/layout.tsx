@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/layout/app-shell";
-import { adminNav } from "@/components/layout/nav-items";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -23,7 +22,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <AppShell
-      nav={adminNav}
+      navKind="admin"
       badge="Admin"
       userLabel={profile?.full_name || profile?.email || "Admin"}
       userEmail={profile?.email || user.email || ""}

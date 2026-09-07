@@ -6,23 +6,28 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, LogOut, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
-import type { NavSection } from "./nav-items";
+import { userNav, adminNav } from "./nav-items";
 import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
 
 export function AppShell({
-  nav,
+  navKind,
   badge,
   userLabel,
   userEmail,
   children,
 }: {
-  nav: NavSection[];
+  navKind: "user" | "admin";
   badge?: string;
   userLabel: string;
   userEmail: string;
   children: React.ReactNode;
 }) {
+  // Icon components (functions) can never cross the Server -> Client
+  // Component boundary as props — only serializable data can. AppShell is a
+  // Client Component ("use client" above), so it imports the icon-bearing
+  // nav data itself rather than receiving it from the server layout.
+  const nav = navKind === "admin" ? adminNav : userNav;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
