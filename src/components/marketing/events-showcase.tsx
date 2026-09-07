@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Search, MapPin, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/lib/i18n/locale-context";
 
 export interface PublicEvent {
   id: string;
@@ -27,7 +28,7 @@ function dateBadge(dateStr: string) {
   };
 }
 
-function fullDateLabel(event: PublicEvent) {
+function fullDateLabel(event: PublicEvent, endsLabel: string) {
   const start = new Date(event.event_date);
   const startLabel = new Intl.DateTimeFormat("en-IN", {
     weekday: "short",
@@ -39,23 +40,25 @@ function fullDateLabel(event: PublicEvent) {
   const endLabel = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short" }).format(
     new Date(event.end_date)
   );
-  return `${startLabel} · Ends ${endLabel}`;
+  return `${startLabel} · ${endsLabel} ${endLabel}`;
 }
 
 export function EventsShowcase({ events }: { events: PublicEvent[] }) {
+  const { t } = useLocale();
   const [query, setQuery] = useState("");
-  const [city, setCity] = useState<string>("All Cities");
+  const allCitiesLabel = t("events.allCities");
+  const [city, setCity] = useState<string>(allCitiesLabel);
 
   const cities = useMemo(() => {
     const set = new Set<string>();
     for (const e of events) if (e.city) set.add(e.city);
-    return ["All Cities", ...Array.from(set)];
-  }, [events]);
+    return [allCitiesLabel, ...Array.from(set)];
+  }, [events, allCitiesLabel]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return events.filter((e) => {
-      const matchesCity = city === "All Cities" || e.city === city;
+      const matchesCity = city === allCitiesLabel || e.city === city;
       const matchesQuery =
         !q ||
         e.name.toLowerCase().includes(q) ||
@@ -63,17 +66,15 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
         (e.venue ?? "").toLowerCase().includes(q);
       return matchesCity && matchesQuery;
     });
-  }, [events, query, city]);
+  }, [events, query, city, allCitiesLabel]);
 
   return (
     <section id="events" className="bg-navy-950 py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="font-display text-2xl font-semibold text-white sm:text-3xl">
-          Upcoming Flea Markets
+          {t("events.heading")}
         </h2>
-        <p className="mt-2 text-sm text-cloud-300">
-          Find your next stall — search by event, city, or venue.
-        </p>
+        <p className="mt-2 text-sm text-cloud-300">{t("events.subheading")}</p>
 
         {/* Search */}
         <div className="mt-6 flex items-center gap-3 rounded-full border border-navy-700 bg-navy-900 px-4 py-3">
@@ -81,7 +82,7 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search events, cities or venues"
+            placeholder={t("events.searchPlaceholder")}
             className="w-full bg-transparent text-sm text-white placeholder:text-charcoal-300 focus:outline-none"
           />
         </div>
@@ -89,7 +90,7 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
         {/* City filter chips */}
         <div className="mt-4 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
           <p className="w-full shrink-0 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-charcoal-300 sm:hidden">
-            Choose a city
+            {t("events.chooseCity")}
           </p>
           {cities.map((c) => (
             <button
@@ -102,7 +103,7 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
                   : "border-navy-700 bg-navy-900 text-cloud-300 hover:border-gold-500/50"
               )}
             >
-              {c !== "All Cities" && <MapPin className="mr-1 inline h-3 w-3" />}
+              {c !== allCitiesLabel && <MapPin className="mr-1 inline h-3 w-3" />}
               {c}
             </button>
           ))}
@@ -112,12 +113,14 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
         {filtered.length === 0 ? (
           <div className="mt-10 rounded-[var(--radius-lg)] border border-dashed border-navy-700 bg-navy-900/50 px-6 py-16 text-center">
             <p className="font-display text-base font-semibold text-white">
-              {events.length === 0 ? "No upcoming events right now" : "No events match your search"}
+              {events.length === 0
+                ? t("events.emptyNoEventsTitle")
+                : t("events.emptyNoMatchTitle")}
             </p>
             <p className="mt-1 text-sm text-cloud-300">
               {events.length === 0
-                ? "Check back soon — new flea markets are added regularly."
-                : "Try a different city or search term."}
+                ? t("events.emptyNoEventsDesc")
+                : t("events.emptyNoMatchDesc")}
             </p>
           </div>
         ) : (
@@ -141,7 +144,7 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center">
-                        <p className="text-xs text-charcoal-300">Event image coming soon</p>
+                        <p className="text-xs text-charcoal-300">{t("events.imageComingSoon")}</p>
                       </div>
                     )}
                     <div className="absolute left-3 top-3 flex h-11 w-11 flex-col items-center justify-center rounded-lg bg-white/95 leading-none shadow-sm">
@@ -152,7 +155,7 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
                     </div>
                     {isOpen && (
                       <span className="absolute right-3 top-3 rounded-full bg-gold-500 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-navy-950">
-                        Applications open
+                        {t("events.applicationsOpen")}
                       </span>
                     )}
                   </div>
@@ -160,7 +163,9 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
                     <p className="font-display text-base font-semibold leading-snug text-white line-clamp-2">
                       {event.name}
                     </p>
-                    <p className="text-xs text-cloud-300">{fullDateLabel(event)}</p>
+                    <p className="text-xs text-cloud-300">
+                      {fullDateLabel(event, t("events.ends"))}
+                    </p>
                     {(event.venue || event.city) && (
                       <p className="flex items-center gap-1 text-xs text-cloud-300">
                         <MapPin className="h-3 w-3 shrink-0" />
@@ -171,11 +176,12 @@ export function EventsShowcase({ events }: { events: PublicEvent[] }) {
                     )}
                     {typeof event.available_stalls === "number" && (
                       <p className="flex items-center gap-1 text-xs font-medium text-gold-400">
-                        <Store className="h-3 w-3" /> {event.available_stalls} stalls available
+                        <Store className="h-3 w-3" /> {event.available_stalls}{" "}
+                        {t("events.stallsAvailable")}
                       </p>
                     )}
                     <Button asChild variant="gold" size="sm" className="mt-2">
-                      <span>View Event</span>
+                      <span>{t("events.viewEvent")}</span>
                     </Button>
                   </div>
                 </Link>

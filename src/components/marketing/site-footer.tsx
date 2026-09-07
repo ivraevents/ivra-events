@@ -1,35 +1,37 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
-
-const columns: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Privacy Policy", href: "/privacy" },
-    ],
-  },
-  {
-    title: "For Vendors",
-    links: [
-      { label: "Upcoming Events", href: "/#events" },
-      { label: "Sign In", href: "/login" },
-      { label: "My Dashboard", href: "/dashboard" },
-    ],
-  },
-];
+import { useLocale } from "@/lib/i18n/locale-context";
 
 export function SiteFooter() {
+  const { t } = useLocale();
+
+  const columns = [
+    {
+      title: t("footer.companyHeading"),
+      links: [
+        { label: t("footer.about"), href: "/about" },
+        { label: t("footer.contact"), href: "/contact" },
+        { label: t("footer.privacy"), href: "/privacy" },
+      ],
+    },
+    {
+      title: t("footer.vendorsHeading"),
+      links: [
+        { label: t("footer.upcomingEvents"), href: "/#events" },
+        { label: t("footer.signIn"), href: "/login" },
+        { label: t("footer.myDashboard"), href: "/dashboard" },
+      ],
+    },
+  ];
+
   return (
     <footer className="border-t border-navy-800 bg-navy-950 text-cloud-300">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:justify-between">
         <div className="max-w-xs">
           <Logo dark size={30} />
-          <p className="mt-3 text-sm text-cloud-300">
-            Book your stall at India&apos;s most curated flea markets — browse events,
-            pick your spot, and manage everything from one place.
-          </p>
+          <p className="mt-3 text-sm text-cloud-300">{t("footer.tagline")}</p>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:gap-16">
           {columns.map((col) => (
@@ -52,7 +54,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-navy-800">
         <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-charcoal-300 sm:px-6">
-          © {new Date().getFullYear()} IVRA Events. All rights reserved.
+          © {new Date().getFullYear()} IVRA Events. {t("footer.rights")}
         </p>
       </div>
     </footer>

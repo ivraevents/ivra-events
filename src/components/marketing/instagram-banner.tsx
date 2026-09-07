@@ -1,3 +1,7 @@
+"use client";
+
+import { useLocale } from "@/lib/i18n/locale-context";
+
 /** Small inline glyph — lucide-react no longer ships brand/social icons. */
 function InstagramGlyph({ className }: { className?: string }) {
   return (
@@ -10,12 +14,13 @@ function InstagramGlyph({ className }: { className?: string }) {
 }
 
 /**
- * Placeholder handle/link — update INSTAGRAM_HANDLE below once you confirm
- * the real IVRA Events Instagram username.
+ * Update this if the real IVRA Events Instagram username ever changes.
  */
 const INSTAGRAM_HANDLE = "ivra.events";
 
 export function InstagramBanner() {
+  const { t } = useLocale();
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <div className="flex flex-col items-start gap-5 rounded-[var(--radius-xl)] border border-gold-500/30 bg-navy-950 p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
@@ -25,14 +30,12 @@ export function InstagramBanner() {
           </span>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-gold-400">
-              IVRA Events on Instagram
+              {t("instagram.eyebrow")}
             </p>
             <p className="mt-1 font-display text-lg font-semibold">
-              Follow @{INSTAGRAM_HANDLE}
+              {t("instagram.follow", { handle: INSTAGRAM_HANDLE })}
             </p>
-            <p className="mt-1 max-w-md text-sm text-cloud-300">
-              See event highlights, stall openings, and vendor updates.
-            </p>
+            <p className="mt-1 max-w-md text-sm text-cloud-300">{t("instagram.desc")}</p>
           </div>
         </div>
         <a
@@ -41,7 +44,7 @@ export function InstagramBanner() {
           rel="noreferrer"
           className="inline-flex shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-cloud-300/30 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
         >
-          View Instagram ↗
+          {t("instagram.cta")} ↗
         </a>
       </div>
     </section>
