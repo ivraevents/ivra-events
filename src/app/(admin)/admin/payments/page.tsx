@@ -5,6 +5,7 @@ import { StatusPill } from "@/components/ui/badge";
 import { formatDateTime, formatPaise, humanize } from "@/lib/utils";
 import { CreditCard, CheckCircle2 } from "lucide-react";
 import { VerifyPaymentButton } from "./verify-button";
+import { RejectPaymentButton } from "./reject-button";
 import { ApproveBookingButton } from "./approve-button";
 
 export default async function AdminPaymentsPage() {
@@ -36,6 +37,7 @@ export default async function AdminPaymentsPage() {
           <Table>
             <THead><TR><TH>User</TH><TH>Purpose</TH><TH>Amount</TH><TH>UTR</TH><TH>Date</TH><TH /></TR></THead>
             <TBody>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase can't infer profiles() cardinality without a typed schema */}
               {pending.map((p: any) => (
                 <TR key={p.id}>
                   <TD>
@@ -46,7 +48,12 @@ export default async function AdminPaymentsPage() {
                   <TD>{formatPaise(p.amount_paise)}</TD>
                   <TD>{p.utr_reference ?? "—"}</TD>
                   <TD>{formatDateTime(p.created_at)}</TD>
-                  <TD><VerifyPaymentButton paymentId={p.id} /></TD>
+                  <TD>
+                    <div className="flex items-center gap-1.5">
+                      <VerifyPaymentButton paymentId={p.id} />
+                      <RejectPaymentButton paymentId={p.id} />
+                    </div>
+                  </TD>
                 </TR>
               ))}
             </TBody>
@@ -62,6 +69,7 @@ export default async function AdminPaymentsPage() {
           <Table>
             <THead><TR><TH>User</TH><TH>Event / Stall</TH><TH>Advance Required</TH><TH /></TR></THead>
             <TBody>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase can't infer profiles()/stalls() cardinality without a typed schema */}
               {pendingApprovals.map((a: any) => (
                 <TR key={a.id}>
                   <TD>{a.profiles?.full_name}</TD>
@@ -80,6 +88,7 @@ export default async function AdminPaymentsPage() {
         <Table>
           <THead><TR><TH>User</TH><TH>Purpose</TH><TH>Amount</TH><TH>Status</TH><TH>Date</TH></TR></THead>
           <TBody>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase can't infer profiles() cardinality without a typed schema */}
             {others.slice(0, 50).map((p: any) => (
               <TR key={p.id}>
                 <TD>{p.profiles?.full_name}</TD>

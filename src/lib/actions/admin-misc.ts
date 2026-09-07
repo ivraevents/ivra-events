@@ -50,6 +50,14 @@ export async function verifyPaymentAction(paymentId: string) {
   return { ok: true };
 }
 
+export async function rejectPaymentAction(paymentId: string, reason?: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("reject_payment", { p_payment_id: paymentId, p_reason: reason ?? null });
+  if (error) return { error: error.message };
+  revalidatePath("/admin/payments");
+  return { ok: true };
+}
+
 export async function adminNegotiationActionFn(negotiationId: string, action: "approve" | "reject" | "counter", price?: number, message?: string) {
   const supabase = await createClient();
   const { error } = await supabase.rpc("admin_negotiation_action", {
