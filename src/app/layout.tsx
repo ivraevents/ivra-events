@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/playfair-display";
 import "./globals.css";
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   },
   description:
     "Browse upcoming flea markets, book stalls, and manage vendor registrations with IVRA Events.",
+  manifest: "/manifest.json",
   icons: {
     icon: [
       { url: "/brand/icon-32.png", sizes: "32x32", type: "image/png" },
@@ -18,6 +19,17 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "IVRA Events",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0a0e21",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
