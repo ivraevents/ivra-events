@@ -132,7 +132,11 @@ export const userBottomNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: Home },
   { label: "Events", href: "/events", icon: CalendarDays },
   { label: "Bookings", href: "/bookings", icon: Store },
-  { label: "Profile", href: "/profile", icon: User },
+  // Profile is already one tap away from the account menu in the header
+  // (avatar -> "Profile settings"), so the bottom tab bar gives its fourth
+  // slot to Wallet instead — its own always-visible section for balance +
+  // Add Fund, rather than living inline on the dashboard.
+  { label: "Wallet", href: "/wallet", icon: Wallet },
 ];
 
 export const adminBottomNav: NavItem[] = [

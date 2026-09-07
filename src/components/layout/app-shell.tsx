@@ -11,6 +11,8 @@ import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
 import { BottomNav } from "./bottom-nav";
 import { InstallAppButton } from "./install-app-button";
+import { LocaleProvider } from "@/lib/i18n/locale-context";
+import { LanguageSwitcher } from "@/components/marketing/language-switcher";
 
 export function AppShell({
   navKind,
@@ -92,6 +94,7 @@ export function AppShell({
   );
 
   return (
+    <LocaleProvider>
     <div className="flex min-h-screen">
       {/* Desktop sidebar */}
       <aside className="hidden w-64 shrink-0 lg:block">{SidebarContent}</aside>
@@ -114,7 +117,8 @@ export function AppShell({
             <Menu className="h-5 w-5" />
           </button>
           <div className="hidden lg:block" />
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <LanguageSwitcher variant="light" />
             <InstallAppButton />
             <NotificationBell />
             <div className="relative">
@@ -164,5 +168,6 @@ export function AppShell({
         </button>
       )}
     </div>
+    </LocaleProvider>
   );
 }

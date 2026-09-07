@@ -2,10 +2,10 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { KpiCard, EmptyState } from "@/components/ui/misc";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/ui/badge";
 import { formatDate, formatPaise } from "@/lib/utils";
-import { CalendarDays, Store, Wallet, ClipboardList, ArrowRight, IndianRupee } from "lucide-react";
+import { CalendarDays, Store, Wallet, ClipboardList } from "lucide-react";
+import { DashboardHero } from "@/components/dashboard/dashboard-hero";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -35,13 +35,6 @@ export default async function DashboardPage() {
     supabase.from("profiles").select("full_name").eq("id", user!.id).single(),
   ]);
 
-  const { data: walletRow } = await supabase
-    .from("wallet_balance_v")
-    .select("balance_paise")
-    .eq("user_id", user!.id)
-    .maybeSingle();
-  const walletBalance = walletRow?.balance_paise ?? 0;
-
   const activeBookings = (bookings ?? []).filter((b) => !["cancelled", "completed"].includes(b.status));
   const pendingBalance = (bookings ?? []).reduce(
     (sum, b) => (b.status === "balance_pending" ? sum + (b.final_price_paise ?? 0) : sum),
@@ -49,9 +42,10 @@ export default async function DashboardPage() {
   );
 
   const firstName = (profile?.full_name || user?.email?.split("@")[0] || "there").trim().split(" ")[0];
-  const hour = new Date().toLocaleString("en-IN", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" });
-  const greeting =
-    Number(hour) < 12 ? "Good Morning" : Number(hour) < 17 ? "Good Afternoon" : "Good Evening";
+  const hour = Number(
+    new Date().toLocaleString("en-IN", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" })
+  );
+  const greetingKey = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
   const todayLabel = new Intl.DateTimeFormat("en-IN", {
     weekday: "long",
     day: "numeric",
@@ -61,30 +55,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="rounded-[var(--radius-lg)] bg-navy-900 px-5 py-6 text-white sm:px-7 sm:py-8">
-        <p className="text-xs font-medium text-cloud-300">{todayLabel}</p>
-        <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
-          {greeting}, <span className="text-gold-400">{firstName}</span> 👋
-        </h1>
-        <p className="mt-2 text-sm text-cloud-300">
-          Here&apos;s what&apos;s happening across your events and bookings.
-        </p>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Button asChild variant="gold">
-            <Link href="/events">
-              Browse Flea Markets <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-          <Link
-            href="/wallet"
-            className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/15"
-          >
-            <IndianRupee className="h-4 w-4 text-gold-400" />
-            Wallet: <span className="font-semibold">{formatPaise(walletBalance)}</span>
-            <span className="text-gold-400">· Add Fund</span>
-          </Link>
-        </div>
-      </div>
+      <DashboardHero todayLabel={todayLabel} greetingKey={greetingKey} firstName={firstName} />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard label="Active Bookings" value={activeBookings.length} icon={Store} tone="navy" />

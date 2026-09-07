@@ -14,6 +14,12 @@ const en: Dict = {
   "header.upcomingEvents": "Upcoming Events",
   "header.signIn": "Sign In",
 
+  "dashboard.greeting.morning": "Good Morning",
+  "dashboard.greeting.afternoon": "Good Afternoon",
+  "dashboard.greeting.evening": "Good Evening",
+  "dashboard.subtitle": "Here's what's happening across your events and bookings.",
+  "dashboard.browseFleaMarkets": "Browse Flea Markets",
+
   "hero.badge": "India's most curated flea markets",
   "hero.title": "Book your stall. Grow your business.",
   "hero.subtitle":
@@ -103,6 +109,12 @@ const hi: Dict = {
   "header.upcomingEvents": "आगामी कार्यक्रम",
   "header.signIn": "साइन इन करें",
 
+  "dashboard.greeting.morning": "सुप्रभात",
+  "dashboard.greeting.afternoon": "नमस्कार",
+  "dashboard.greeting.evening": "शुभ संध्या",
+  "dashboard.subtitle": "आपके कार्यक्रमों और बुकिंग की जानकारी यहाँ है।",
+  "dashboard.browseFleaMarkets": "कार्यक्रम देखें",
+
   "hero.badge": "भारत के सबसे चुनिंदा फ्ली मार्केट",
   "hero.title": "अपना स्टॉल बुक करें। अपना व्यवसाय बढ़ाएं।",
   "hero.subtitle":
@@ -191,6 +203,12 @@ const hi: Dict = {
 const kn: Dict = {
   "header.upcomingEvents": "ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು",
   "header.signIn": "ಸೈನ್ ಇನ್ ಮಾಡಿ",
+
+  "dashboard.greeting.morning": "ಶುಭೋದಯ",
+  "dashboard.greeting.afternoon": "ನಮಸ್ಕಾರ",
+  "dashboard.greeting.evening": "ಶುಭ ಸಂಜೆ",
+  "dashboard.subtitle": "ನಿಮ್ಮ ಕಾರ್ಯಕ್ರಮಗಳು ಮತ್ತು ಬುಕಿಂಗ್‌ಗಳ ವಿವರ ಇಲ್ಲಿದೆ.",
+  "dashboard.browseFleaMarkets": "ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
 
   "hero.badge": "ಭಾರತದ ಅತ್ಯುತ್ತಮ ಆಯ್ಕೆಯ ಫ್ಲೀ ಮಾರುಕಟ್ಟೆಗಳು",
   "hero.title": "ನಿಮ್ಮ ಸ್ಟಾಲ್ ಬುಕ್ ಮಾಡಿ. ನಿಮ್ಮ ವ್ಯವಹಾರವನ್ನು ಬೆಳೆಸಿ.",
