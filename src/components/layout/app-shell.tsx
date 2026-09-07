@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, LogOut, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
-import { userNav, adminNav } from "./nav-items";
+import { getUserNav, adminNav } from "./nav-items";
 import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
 import { BottomNav } from "./bottom-nav";
@@ -17,19 +17,24 @@ export function AppShell({
   badge,
   userLabel,
   userEmail,
+  hideProvideSection,
   children,
 }: {
   navKind: "user" | "admin";
   badge?: string;
   userLabel: string;
   userEmail: string;
+  /** True once this account already has a stall registration — canopy/game
+   *  provider registration is then a separate, mutually-exclusive vendor
+   *  path and stops showing up in their menu. */
+  hideProvideSection?: boolean;
   children: React.ReactNode;
 }) {
   // Icon components (functions) can never cross the Server -> Client
   // Component boundary as props — only serializable data can. AppShell is a
   // Client Component ("use client" above), so it imports the icon-bearing
   // nav data itself rather than receiving it from the server layout.
-  const nav = navKind === "admin" ? adminNav : userNav;
+  const nav = navKind === "admin" ? adminNav : getUserNav({ hideProvideSection });
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();

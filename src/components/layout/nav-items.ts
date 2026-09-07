@@ -3,7 +3,7 @@ import {
   LayoutDashboard, CalendarDays, ClipboardList, Store, User, FileText,
   Wallet, Receipt, Bell, LifeBuoy, Users, PackageSearch, MapPinned,
   Crown, Handshake, Tent, Gamepad2, FolderLock, CreditCard, BadgePercent,
-  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home,
+  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home, Info, Lock,
 } from "lucide-react";
 
 export interface NavItem {
@@ -17,39 +17,68 @@ export interface NavSection {
   items: NavItem[];
 }
 
-export const userNav: NavSection[] = [
-  {
-    items: [
-      { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-      { label: "Browse Events", href: "/events", icon: CalendarDays },
-    ],
-  },
-  {
-    title: "My Activity",
-    items: [
-      { label: "My Registrations", href: "/registrations", icon: ClipboardList },
-      { label: "My Bookings", href: "/bookings", icon: Store },
-      { label: "Documents", href: "/documents", icon: FileText },
-      { label: "Payments", href: "/payments", icon: Wallet },
-      { label: "Invoices", href: "/invoices", icon: Receipt },
-    ],
-  },
-  {
-    title: "Provide",
-    items: [
-      { label: "Canopy Registration", href: "/register/canopy", icon: Tent },
-      { label: "Games & Entertainment", href: "/register/game", icon: Gamepad2 },
-    ],
-  },
-  {
-    title: "Account",
-    items: [
-      { label: "Profile", href: "/profile", icon: User },
-      { label: "Notifications", href: "/notifications", icon: Bell },
-      { label: "Support", href: "/support", icon: LifeBuoy },
-    ],
-  },
-];
+/**
+ * Stall vendors and canopy/game providers are kept as separate vendor
+ * types — once someone has registered a stall (a "vendor" registration),
+ * the "Provide" section (canopy / games registration) is hidden for them,
+ * rather than showing both paths on every account. `getUserNav` is a
+ * function (not a plain constant) so AppShell can pass that one flag
+ * through without needing to know anything else about the vendor.
+ */
+export function getUserNav({ hideProvideSection = false }: { hideProvideSection?: boolean } = {}): NavSection[] {
+  const sections: NavSection[] = [
+    {
+      items: [
+        { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+        { label: "Browse Events", href: "/events", icon: CalendarDays },
+        { label: "Wallet", href: "/wallet", icon: Wallet },
+      ],
+    },
+    {
+      title: "My Activity",
+      items: [
+        { label: "My Registrations", href: "/registrations", icon: ClipboardList },
+        { label: "My Bookings", href: "/bookings", icon: Store },
+        { label: "Documents", href: "/documents", icon: FileText },
+        { label: "Payments", href: "/payments", icon: CreditCard },
+        { label: "Invoices", href: "/invoices", icon: Receipt },
+      ],
+    },
+  ];
+
+  if (!hideProvideSection) {
+    sections.push({
+      title: "Provide",
+      items: [
+        { label: "Canopy Registration", href: "/register/canopy", icon: Tent },
+        { label: "Games & Entertainment", href: "/register/game", icon: Gamepad2 },
+      ],
+    });
+  }
+
+  sections.push(
+    {
+      title: "Account",
+      items: [
+        { label: "Profile", href: "/profile", icon: User },
+        { label: "Notifications", href: "/notifications", icon: Bell },
+      ],
+    },
+    {
+      title: "Help & Legal",
+      items: [
+        { label: "Support", href: "/support", icon: LifeBuoy },
+        { label: "About IVRA Events", href: "/about", icon: Info },
+        { label: "Privacy Policy", href: "/privacy", icon: Lock },
+      ],
+    }
+  );
+
+  return sections;
+}
+
+/** @deprecated use getUserNav() — kept only so nothing else importing the old constant breaks. */
+export const userNav: NavSection[] = getUserNav();
 
 export const adminNav: NavSection[] = [
   { items: [{ label: "Dashboard", href: "/admin", icon: LayoutDashboard }] },

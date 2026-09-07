@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge, StatusPill } from "@/components/ui/badge";
@@ -26,6 +26,7 @@ export function StallDetailDialog({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   if (!stall) return null;
 
@@ -41,6 +42,19 @@ export function StallDetailDialog({
     setLoading(true);
     setError(null);
     const supabase = createClient();
+
+    // Browsing is public, but reserving a stall needs an account — send
+    // signed-out visitors to sign in and bring them straight back here
+    // instead of showing a dead-end error.
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      setLoading(false);
+      router.push(`/login?next=${encodeURIComponent(pathname)}`);
+      return;
+    }
+
     const { data, error } = await supabase.rpc("reserve_stall", {
       p_stall_id: stall!.id,
       p_category_id: requiresCategory ? categoryId : stall!.preset_category_id,

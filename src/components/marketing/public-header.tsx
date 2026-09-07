@@ -15,7 +15,7 @@ export function PublicHeader() {
         <Logo dark size={32} />
         <nav className="flex items-center gap-2 sm:gap-4">
           <Link
-            href="/#events"
+            href="/events"
             className="hidden text-sm font-medium text-cloud-300 hover:text-white sm:block"
           >
             {t("header.upcomingEvents")}

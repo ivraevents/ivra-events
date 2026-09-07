@@ -12,9 +12,14 @@ import { PriceBreakdownCard } from "./price-breakdown-card";
 import { upsertVendorRegistration, submitRegistrationForReview, type VendorFormValues } from "@/lib/actions/registration";
 import { formatPaise } from "@/lib/utils";
 import type { PriceBreakdown } from "@/types/domain";
-import { CheckCircle2, PartyPopper } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 const STEPS = ["Registration", "Documents", "Review & Pay", "Confirmation"];
+
+interface PublicSettings {
+  application_fee_paise?: number;
+  upi_details?: { vpa?: string; payee_name?: string };
+}
 
 export function BookingWizard({
   reservationId,
@@ -46,7 +51,9 @@ export function BookingWizard({
   const [breakdownLoading, setBreakdownLoading] = useState(false);
   const [allocationId, setAllocationId] = useState<string | null>(null);
   const [utr, setUtr] = useState("");
-  const [publicSettings, setPublicSettings] = useState<any>(null);
+  const [publicSettings, setPublicSettings] = useState<PublicSettings | null>(null);
+  const [walletBalance, setWalletBalance] = useState<number | null>(null);
+  const [walletPaying, setWalletPaying] = useState(false);
 
   if (expired) {
     return (
@@ -111,6 +118,34 @@ export function BookingWizard({
     }
     setAllocationId(data.id);
     setStep(3);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: wallet } = await supabase
+        .from("wallet_balance_v")
+        .select("balance_paise")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      setWalletBalance(wallet?.balance_paise ?? 0);
+    }
+  }
+
+  async function payFromWallet() {
+    if (!breakdown || !allocationId) return;
+    setWalletPaying(true);
+    setError(null);
+    const supabase = createClient();
+    const { error } = await supabase.rpc("pay_from_wallet", {
+      p_allocation_id: allocationId,
+      p_amount_paise: breakdown.additional_advance_required_paise,
+      p_purpose: "stall_advance",
+    });
+    setWalletPaying(false);
+    if (error) {
+      setError(error.message);
+      return;
+    }
+    router.push(`/bookings/${allocationId}`);
   }
 
   async function payApplicationFee() {
@@ -287,6 +322,24 @@ export function BookingWizard({
           <Card>
             <CardContent className="flex flex-col gap-4">
               <p className="font-display text-lg font-semibold text-navy-900">Pay Advance</p>
+
+              {walletBalance !== null && (
+                <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-gold-500/40 bg-gold-500/10 p-4 text-sm">
+                  <span>
+                    Wallet balance: <span className="font-semibold text-navy-900">{formatPaise(walletBalance)}</span>
+                  </span>
+                  {walletBalance >= breakdown.additional_advance_required_paise ? (
+                    <Button size="sm" variant="gold" loading={walletPaying} onClick={payFromWallet}>
+                      Pay from Wallet
+                    </Button>
+                  ) : (
+                    <a href="/wallet" className="text-xs font-medium text-royal-600 underline underline-offset-2">
+                      Add funds
+                    </a>
+                  )}
+                </div>
+              )}
+
               {publicSettings?.upi_details?.vpa && (
                 <div className="rounded-[var(--radius-md)] bg-surface-muted p-4 text-sm">
                   <p>Pay to UPI ID: <span className="font-semibold">{publicSettings.upi_details.vpa}</span></p>
