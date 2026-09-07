@@ -1,0 +1,39 @@
+import { Suspense } from "react";
+import { LoginCard } from "./login-card";
+import { Logo } from "@/components/ui/logo";
+
+export default function LoginPage() {
+  return (
+    <div className="grid min-h-screen flex-1 lg:grid-cols-2">
+      <div className="relative hidden flex-col justify-between overflow-hidden bg-navy-950 p-12 text-white lg:flex">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 20%, rgba(201,152,47,0.25), transparent 40%), radial-gradient(circle at 80% 70%, rgba(47,91,222,0.25), transparent 45%)",
+          }}
+        />
+        <Logo dark size={44} className="relative z-10" />
+        <div className="relative z-10 max-w-md">
+          <h2 className="font-display text-3xl font-semibold leading-tight">
+            Book your stall at India&apos;s most curated flea markets.
+          </h2>
+          <p className="mt-4 text-sm text-cloud-300">
+            Browse upcoming events, pick your spot on the stall map, and manage
+            documents, payments and invoices — all in one premium dashboard.
+          </p>
+        </div>
+        <p className="relative z-10 text-xs text-charcoal-300">© {new Date().getFullYear()} IVRA Events</p>
+      </div>
+
+      <div className="flex flex-col items-center justify-center gap-8 p-8">
+        <div className="lg:hidden">
+          <Logo size={40} />
+        </div>
+        <Suspense>
+          <LoginCard />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
