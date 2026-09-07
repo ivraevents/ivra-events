@@ -9,6 +9,8 @@ import { Logo } from "@/components/ui/logo";
 import { userNav, adminNav } from "./nav-items";
 import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
+import { BottomNav } from "./bottom-nav";
+import { InstallAppButton } from "./install-app-button";
 
 export function AppShell({
   navKind,
@@ -107,7 +109,8 @@ export function AppShell({
             <Menu className="h-5 w-5" />
           </button>
           <div className="hidden lg:block" />
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <InstallAppButton />
             <NotificationBell />
             <div className="relative">
               <button
@@ -141,8 +144,10 @@ export function AppShell({
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">{children}</main>
       </div>
+
+      <BottomNav navKind={navKind} onMore={() => setMobileOpen(true)} />
 
       {mobileOpen && (
         <button

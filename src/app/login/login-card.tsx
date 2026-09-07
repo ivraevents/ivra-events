@@ -64,19 +64,25 @@ export function LoginCard() {
           </p>
         )}
 
-        <Button variant="outline" size="lg" onClick={continueWithGoogle} loading={loading === "google"}>
+        <Button
+          variant="outline"
+          size="lg"
+          className="h-12 rounded-[var(--radius-lg)]"
+          onClick={continueWithGoogle}
+          loading={loading === "google"}
+        >
           <GoogleIcon className="h-4 w-4" />
           Continue with Google
         </Button>
 
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span className="h-px flex-1 bg-border" />
-          or
+          or using other method
           <span className="h-px flex-1 bg-border" />
         </div>
 
         {mode === "choose" ? (
-          <Button variant="primary" size="lg" onClick={() => setMode("email")}>
+          <Button variant="primary" size="lg" className="h-12 rounded-[var(--radius-lg)]" onClick={() => setMode("email")}>
             <Mail className="h-4 w-4" />
             Continue with Email OTP
           </Button>
@@ -86,11 +92,13 @@ export function LoginCard() {
               type="email"
               required
               autoFocus
+              icon={Mail}
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="h-12 rounded-[var(--radius-lg)]"
             />
-            <Button type="submit" size="lg" loading={loading === "otp"}>
+            <Button type="submit" size="lg" className="h-12 rounded-[var(--radius-lg)]" loading={loading === "otp"}>
               Send 6-digit code
               <ArrowRight className="h-4 w-4" />
             </Button>

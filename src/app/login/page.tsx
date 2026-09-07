@@ -10,7 +10,7 @@ export default function LoginPage() {
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20% 20%, rgba(201,152,47,0.25), transparent 40%), radial-gradient(circle at 80% 70%, rgba(47,91,222,0.25), transparent 45%)",
+              "radial-gradient(circle at 20% 20%, rgba(201,152,47,0.25), transparent 40%), radial-gradient(circle at 80% 70%, rgba(29,132,73,0.3), transparent 45%)",
           }}
         />
         <Logo dark size={44} className="relative z-10" />

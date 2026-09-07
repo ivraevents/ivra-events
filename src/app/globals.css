@@ -2,21 +2,23 @@
 
 /* =====================================================================
    IVRA EVENTS — Design System
-   Premium Navrathan-CRM-inspired palette: deep navy, royal blue, gold
-   accent, on a clean off-white surface. Every color below is a token —
-   change it here and the whole app follows.
+   Navrathan-CRM-inspired palette: deep forest green, mid green accent,
+   gold highlight, on a clean off-white surface. Every color below is a
+   token — change it here and the whole app follows. The green values
+   are sampled directly from the Navrathan CRM app so the two apps read
+   as one family.
    ===================================================================== */
 
 :root {
   /* Brand */
-  --color-navy-950: #05070f;
-  --color-navy-900: #0a0e21;
-  --color-navy-800: #10162f;
-  --color-navy-700: #171e3f;
-  --color-navy-600: #212a54;
-  --color-royal-600: #2447c7;
-  --color-royal-500: #2f5bde;
-  --color-royal-400: #5b7bea;
+  --color-navy-950: #041a0d;
+  --color-navy-900: #0a3b1d;
+  --color-navy-800: #0f4a26;
+  --color-navy-700: #1c5c34;
+  --color-navy-600: #2c6e42;
+  --color-royal-600: #146c36;
+  --color-royal-500: #1d8449;
+  --color-royal-400: #4cae6c;
   --color-gold-600: #a67c1e;
   --color-gold-500: #c9982f;
   --color-gold-400: #d9b45c;

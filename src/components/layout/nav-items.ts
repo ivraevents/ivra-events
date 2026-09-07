@@ -3,7 +3,7 @@ import {
   LayoutDashboard, CalendarDays, ClipboardList, Store, User, FileText,
   Wallet, Receipt, Bell, LifeBuoy, Users, PackageSearch, MapPinned,
   Crown, Handshake, Tent, Gamepad2, FolderLock, CreditCard, BadgePercent,
-  Ticket, Headphones, ScrollText, Settings, ShieldAlert,
+  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home,
 } from "lucide-react";
 
 export interface NavItem {
@@ -92,4 +92,23 @@ export const adminNav: NavSection[] = [
       { label: "Settings", href: "/admin/settings", icon: Settings },
     ],
   },
+];
+
+/**
+ * Short lists for the mobile bottom tab bar — a "More" tab (which opens the
+ * full drawer above) covers everything else, mirroring the Home / Visitors /
+ * Task / Report / More pattern from the Navrathan CRM app.
+ */
+export const userBottomNav: NavItem[] = [
+  { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Events", href: "/events", icon: CalendarDays },
+  { label: "Bookings", href: "/bookings", icon: Store },
+  { label: "Profile", href: "/profile", icon: User },
+];
+
+export const adminBottomNav: NavItem[] = [
+  { label: "Home", href: "/admin", icon: Home },
+  { label: "Events", href: "/admin/events", icon: CalendarDays },
+  { label: "Users", href: "/admin/users", icon: Users },
+  { label: "Reports", href: "/admin/reports", icon: ScrollText },
 ];

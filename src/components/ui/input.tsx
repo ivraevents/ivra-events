@@ -1,19 +1,36 @@
 import * as React from "react";
+import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, ...props }, ref) => (
-    <input
-      ref={ref}
-      className={cn(
-        "flex h-10 w-full rounded-[var(--radius-md)] border border-border bg-surface px-3 text-sm text-foreground placeholder:text-charcoal-300",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-500 focus-visible:border-royal-500",
-        "disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
-  )
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** Optional leading icon, e.g. for a cleaner sign-in / registration form. */
+  icon?: LucideIcon;
+  wrapperClassName?: string;
+}
+
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, wrapperClassName, icon: Icon, ...props }, ref) => {
+    const input = (
+      <input
+        ref={ref}
+        className={cn(
+          "flex h-10 w-full rounded-[var(--radius-md)] border border-border bg-surface px-3 text-sm text-foreground placeholder:text-charcoal-300",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-500 focus-visible:border-royal-500",
+          "disabled:opacity-50",
+          Icon && "pl-10",
+          className
+        )}
+        {...props}
+      />
+    );
+    if (!Icon) return input;
+    return (
+      <div className={cn("relative w-full", wrapperClassName)}>
+        <Icon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal-300" />
+        {input}
+      </div>
+    );
+  }
 );
 Input.displayName = "Input";
 

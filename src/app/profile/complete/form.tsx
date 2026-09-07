@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { User, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, FormField } from "@/components/ui/input";
 import { completeProfile } from "./actions";
@@ -47,19 +48,28 @@ export function CompleteProfileForm({
         </p>
       )}
       <FormField label="Full name" htmlFor="full_name" required>
-        <Input id="full_name" required value={name} onChange={(e) => setName(e.target.value)} />
+        <Input
+          id="full_name"
+          required
+          icon={User}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="h-12 rounded-[var(--radius-lg)]"
+        />
       </FormField>
       <FormField label="Mobile number" htmlFor="mobile" required hint="10 digits, no country code">
         <Input
           id="mobile"
           required
+          icon={Phone}
           inputMode="numeric"
           maxLength={10}
           value={mobile}
           onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
+          className="h-12 rounded-[var(--radius-lg)]"
         />
       </FormField>
-      <Button type="submit" size="lg" loading={pending}>
+      <Button type="submit" size="lg" className="h-12 rounded-[var(--radius-lg)]" loading={pending}>
         Continue
       </Button>
     </form>

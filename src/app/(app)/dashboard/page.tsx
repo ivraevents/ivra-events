@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { PageHeader, KpiCard, EmptyState } from "@/components/ui/misc";
+import { KpiCard, EmptyState } from "@/components/ui/misc";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/ui/badge";
@@ -13,7 +13,7 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data: bookings }, { data: registrations }, { data: upcoming }] = await Promise.all([
+  const [{ data: bookings }, { data: registrations }, { data: upcoming }, { data: profile }] = await Promise.all([
     supabase
       .from("stall_allocations")
       .select("id, status, final_price_paise, required_advance_paise, stalls(stall_number, events(name, slug, event_date))")
@@ -32,6 +32,7 @@ export default async function DashboardPage() {
       .in("status", ["upcoming", "registration_open"])
       .order("event_date", { ascending: true })
       .limit(3),
+    supabase.from("profiles").select("full_name").eq("id", user!.id).single(),
   ]);
 
   const activeBookings = (bookings ?? []).filter((b) => !["cancelled", "completed"].includes(b.status));
@@ -40,19 +41,33 @@ export default async function DashboardPage() {
     0
   );
 
+  const firstName = (profile?.full_name || user?.email?.split("@")[0] || "there").trim().split(" ")[0];
+  const hour = new Date().toLocaleString("en-IN", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" });
+  const greeting =
+    Number(hour) < 12 ? "Good Morning" : Number(hour) < 17 ? "Good Afternoon" : "Good Evening";
+  const todayLabel = new Intl.DateTimeFormat("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date());
+
   return (
     <div className="flex flex-col gap-8">
-      <PageHeader
-        title="Welcome back"
-        description="Here's what's happening across your events and bookings."
-        actions={
-          <Button asChild>
-            <Link href="/events">
-              Browse Flea Markets <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        }
-      />
+      <div className="rounded-[var(--radius-lg)] bg-navy-900 px-5 py-6 text-white sm:px-7 sm:py-8">
+        <p className="text-xs font-medium text-cloud-300">{todayLabel}</p>
+        <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+          {greeting}, <span className="text-gold-400">{firstName}</span> 👋
+        </h1>
+        <p className="mt-2 text-sm text-cloud-300">
+          Here&apos;s what&apos;s happening across your events and bookings.
+        </p>
+        <Button asChild variant="gold" className="mt-5">
+          <Link href="/events">
+            Browse Flea Markets <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard label="Active Bookings" value={activeBookings.length} icon={Store} tone="navy" />
@@ -72,6 +87,7 @@ export default async function DashboardPage() {
               <EmptyState icon={Store} title="No bookings yet" description="Browse upcoming flea markets to book your first stall." />
             ) : (
               <div className="flex flex-col divide-y divide-border">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase can't infer stalls() cardinality without a typed schema */}
                 {bookings.map((b: any) => (
                   <div key={b.id} className="flex items-center justify-between py-3">
                     <div>

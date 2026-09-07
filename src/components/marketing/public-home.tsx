@@ -22,7 +22,7 @@ function PublicHomeContent({ events }: { events: PublicEvent[] }) {
           className="pointer-events-none absolute inset-0 opacity-40"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 15% 20%, rgba(201,152,47,0.25), transparent 45%), radial-gradient(circle at 85% 60%, rgba(47,91,222,0.3), transparent 45%)",
+              "radial-gradient(circle at 15% 20%, rgba(201,152,47,0.25), transparent 45%), radial-gradient(circle at 85% 60%, rgba(29,132,73,0.35), transparent 45%)",
           }}
         />
         <div className="relative mx-auto max-w-2xl">

@@ -106,11 +106,17 @@ export function VerifyOtpForm() {
                   onKeyDown={(e) => handleKeyDown(i, e)}
                   inputMode="numeric"
                   maxLength={1}
-                  className="h-12 w-10 rounded-[var(--radius-md)] border border-border bg-surface text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-royal-500"
+                  className="h-14 w-11 rounded-[var(--radius-lg)] border border-border bg-surface text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-royal-500"
                 />
               ))}
             </div>
-            <Button type="submit" size="lg" loading={loading} disabled={attempts >= MAX_ATTEMPTS}>
+            <Button
+              type="submit"
+              size="lg"
+              className="h-12 rounded-[var(--radius-lg)]"
+              loading={loading}
+              disabled={attempts >= MAX_ATTEMPTS}
+            >
               Verify &amp; continue
             </Button>
           </form>
