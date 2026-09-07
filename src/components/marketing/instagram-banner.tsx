@@ -13,7 +13,7 @@ function InstagramGlyph({ className }: { className?: string }) {
  * Placeholder handle/link — update INSTAGRAM_HANDLE below once you confirm
  * the real IVRA Events Instagram username.
  */
-const INSTAGRAM_HANDLE = "ivraevents";
+const INSTAGRAM_HANDLE = "ivra.events";
 
 export function InstagramBanner() {
   return (
