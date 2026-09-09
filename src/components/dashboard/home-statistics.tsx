@@ -1,57 +1,83 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { CalendarDays, Store, Ticket, ShieldCheck, type LucideIcon } from "lucide-react";
+
+/** Animates 0 -> target once on mount — the "running" counter effect. */
+function useCountUp(target: number, durationMs = 1200) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    let raf: number;
+    const start = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min((now - start) / durationMs, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * target));
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    }
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, durationMs]);
+
+  return value;
+}
+
+function StatCard({ icon: Icon, target, label }: { icon: LucideIcon; target: number; label: string }) {
+  const value = useCountUp(target);
+  return (
+    <div className="flex flex-col items-center gap-2 rounded-2xl border border-[#242629] bg-[#131518] px-3 py-4 text-center">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#ffd83d]/25 bg-[#ffd83d]/10">
+        <Icon className="h-4 w-4 text-[#ffd83d]" />
+      </span>
+      <span className="font-display text-xl font-black tracking-tight text-white">
+        {value.toLocaleString("en-IN")}
+        {target > 0 && "+"}
+      </span>
+      <span className="h-0.5 w-5 rounded-full bg-gradient-to-r from-[#ffe873] via-[#ffb23d] to-[#ff6a3d]" />
+      <span className="text-[10px] font-medium leading-tight text-[#75797d]">{label}</span>
+    </div>
+  );
+}
+
 /**
- * "Our Statistics" section — every number here is a real, live count from
- * the public event listing (events, cities, stalls, and stalls already
- * booked). No marketing placeholders like footfall or satisfaction % since
- * IVRA has no real data source for those yet.
+ * "Our Statistics" section — same badge + heading + 4-card layout as the
+ * reference design, but every number is real and live from the database
+ * (no marketing placeholders like "10,000+ Footfall" or "98% Satisfaction").
+ * Add or update events, stalls and registrations in Admin and these counts
+ * update on their own — nothing here is typed in by hand.
  */
 export function HomeStatistics({
-  eventsCount,
-  citiesCount,
+  totalEvents,
   totalStalls,
   stallsBooked,
+  verifiedCustomers,
 }: {
-  eventsCount: number;
-  citiesCount: number;
+  totalEvents: number;
   totalStalls: number;
   stallsBooked: number;
+  verifiedCustomers: number;
 }) {
-  const stats = [
-    { icon: "📅", value: eventsCount, label: "Events Listed" },
-    { icon: "🏙️", value: citiesCount, label: "Cities Covered" },
-    { icon: "🏬", value: totalStalls, label: "Total Stalls" },
-    { icon: "✅", value: stallsBooked, label: "Stalls Booked" },
-  ];
-
   return (
-    <section className="mt-2 text-center">
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-500/25 bg-gold-500/10 px-3.5 py-2 text-[10px] font-bold text-gold-400">
-        📊 IVRA Events by the Numbers
-      </span>
-      <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-white sm:text-[27px]">
-        Our{" "}
-        <span className="bg-gradient-to-r from-gold-500 to-[#ff9135] bg-clip-text text-transparent">
-          Statistics
+    <div>
+      <div className="flex flex-col items-center text-center">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ffd83d]/25 bg-[#ffd83d]/10 px-3 py-1 text-[10px] font-semibold text-[#ffd83d]">
+          📊 Live Platform Stats
         </span>
-      </h2>
-      <p className="mt-1.5 text-xs text-cloud-300">Connecting vendors with flea markets across India</p>
-
-      <div className="mt-5 grid grid-cols-2 gap-2.5">
-        {stats.map((s) => (
-          <div
-            key={s.label}
-            className="flex min-h-[150px] flex-col items-center justify-center rounded-[1.25rem] border border-navy-700 bg-navy-900 px-2 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
-          >
-            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-500/25 bg-gold-500/10 text-lg">
-              {s.icon}
-            </span>
-            <span className="mt-3 bg-gradient-to-r from-gold-500 to-[#ff9135] bg-clip-text text-2xl font-black tracking-tight text-transparent">
-              {s.value}
-            </span>
-            <span className="my-2 h-1 w-8 rounded-full bg-gradient-to-r from-gold-500 to-[#ff9135]" />
-            <span className="text-[9px] font-semibold text-charcoal-300">{s.label}</span>
-          </div>
-        ))}
+        <h2 className="mt-2.5 font-display text-xl font-bold text-white">
+          Our <span className="text-[#ffd83d]">Statistics</span>
+        </h2>
+        <p className="mt-1 text-xs text-[#a2a5a8]">Connecting vendors with events across India</p>
       </div>
-    </section>
+
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatCard icon={CalendarDays} target={totalEvents} label="Events Hosted" />
+        <StatCard icon={Store} target={totalStalls} label="Stalls Listed" />
+        <StatCard icon={Ticket} target={stallsBooked} label="Stalls Booked" />
+        <StatCard icon={ShieldCheck} target={verifiedCustomers} label="Verified Customers" />
+      </div>
+    </div>
   );
 }

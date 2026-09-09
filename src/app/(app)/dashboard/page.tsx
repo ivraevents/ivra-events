@@ -3,7 +3,7 @@ import { HomeHeader } from "@/components/dashboard/home-header";
 import { HomeOffersSlider } from "@/components/dashboard/home-offers-slider";
 import { HomeMarkets, type EventPricing } from "@/components/dashboard/home-markets";
 import { HomeInstagramCard } from "@/components/dashboard/home-instagram-card";
-import { HomeTrustStrip } from "@/components/dashboard/home-trust-strip";
+import { HomeStatistics } from "@/components/dashboard/home-statistics";
 import type { EventListing } from "@/types/domain";
 
 export default async function DashboardPage() {
@@ -43,12 +43,15 @@ export default async function DashboardPage() {
     }
   }
 
-  // Trust strip — every number is a real, live count (no marketing
-  // placeholders): stalls + stalls booked come straight from the public
-  // event listing, verified customers from a SECURITY DEFINER RPC (0028)
-  // since the underlying registrations table is select-own only.
+  // "Our Statistics" section — every number is a real, live count (no
+  // marketing placeholders): events + stalls + stalls booked come straight
+  // from the public event listing, verified customers from a SECURITY
+  // DEFINER RPC (0028) since the underlying registrations table is
+  // select-own only. Add/update events, stalls or registrations in Admin
+  // and these all move on their own.
   const { data: statsData } = await supabase.from("event_listing_v").select("total_stalls, available_stalls");
   const statsRows = (statsData ?? []) as Array<{ total_stalls: number; available_stalls: number }>;
+  const totalEvents = statsRows.length;
   const totalStalls = statsRows.reduce((sum, r) => sum + (r.total_stalls ?? 0), 0);
   const stallsBooked = statsRows.reduce((sum, r) => sum + ((r.total_stalls ?? 0) - (r.available_stalls ?? 0)), 0);
 
@@ -75,10 +78,11 @@ export default async function DashboardPage() {
         <HomeOffersSlider />
         <HomeMarkets events={events} pricing={pricing} />
         <HomeInstagramCard />
-        <HomeTrustStrip
+        <HomeStatistics
+          totalEvents={totalEvents}
           totalStalls={totalStalls}
-          verifiedCustomers={verifiedCustomers ?? 0}
           stallsBooked={stallsBooked}
+          verifiedCustomers={verifiedCustomers ?? 0}
         />
       </div>
     </div>
