@@ -33,7 +33,7 @@ export function getUserNav({ hideProvideSection = false }: { hideProvideSection?
   const sections: NavSection[] = [
     {
       items: [
-        { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+        { label: "Dashboard", href: "/", icon: LayoutDashboard },
         { label: "Browse Events", href: "/events", icon: CalendarDays },
         { label: "Wallet", href: "/wallet", icon: Wallet },
       ],
@@ -84,6 +84,41 @@ export function getUserNav({ hideProvideSection = false }: { hideProvideSection?
 /** @deprecated use getUserNav() — kept only so nothing else importing the old constant breaks. */
 export const userNav: NavSection[] = getUserNav();
 
+/**
+ * Nav shown to a signed-out visitor browsing the now-public Home page —
+ * only what makes sense without an account (browsing events, the two
+ * "become a provider" registration flows, and help/legal). Anything that
+ * needs an account (Wallet, My Bookings, Documents, Profile, …) is left
+ * out here; a signed-out visitor who taps one of those elsewhere (e.g. the
+ * bottom nav) is simply asked to sign in, same as before.
+ */
+export function getGuestNav(): NavSection[] {
+  return [
+    {
+      items: [
+        { label: "Home", href: "/", icon: Home },
+        { label: "Browse Events", href: "/events", icon: CalendarDays },
+        { label: "Register / Sign In", href: "/login", icon: User },
+      ],
+    },
+    {
+      title: "Provide",
+      items: [
+        { label: "Canopy Registration", href: "/register/canopy", icon: Tent },
+        { label: "Games & Entertainment", href: "/register/game", icon: Gamepad2 },
+      ],
+    },
+    {
+      title: "Help & Legal",
+      items: [
+        { label: "Support", href: "/support", icon: LifeBuoy },
+        { label: "About IVRA Events", href: "/about", icon: Info },
+        { label: "Privacy Policy", href: "/privacy", icon: Lock },
+      ],
+    },
+  ];
+}
+
 export const adminNav: NavSection[] = [
   { items: [{ label: "Dashboard", href: "/admin", icon: LayoutDashboard }] },
   {
@@ -103,7 +138,7 @@ export const adminNav: NavSection[] = [
       { label: "Registrations", href: "/admin/registrations", icon: ClipboardList },
       { label: "Canopy Providers", href: "/admin/canopy", icon: Tent },
       { label: "Games & Entertainment", href: "/admin/games", icon: Gamepad2 },
-      { label: "Documents", href: "/admin/documents", icon: FolderLock },
+      { label: "KYC Approval", href: "/admin/documents", icon: FolderLock },
     ],
   },
   {
@@ -136,7 +171,7 @@ export const adminNav: NavSection[] = [
 // middle. Profile is reached from the header avatar, not a tab, so it
 // isn't duplicated here.
 export const userBottomNav: NavItem[] = [
-  { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Home", href: "/", icon: Home },
   { label: "Offer", href: "/events", icon: Gift },
   { label: "Booking", href: "/bookings", icon: Store, raised: true },
   { label: "Wallet", href: "/wallet", icon: Wallet },

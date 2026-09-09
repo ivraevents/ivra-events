@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { useActionState } from "react";
 import { Input, Textarea, FormField } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { KycGate } from "@/components/kyc/kyc-gate";
 import { submitGameRegistration } from "@/lib/actions/provider-registration";
 
 const initialState = { error: undefined as string | undefined };
 
 export function GameForm({ events }: { events: { id: string; name: string }[] }) {
+  const [kycReady, setKycReady] = useState(false);
   const [state, formAction, pending] = useActionState(async (_prev: typeof initialState, formData: FormData) => {
     const res = await submitGameRegistration(formData);
     return res ?? initialState;
@@ -16,6 +19,10 @@ export function GameForm({ events }: { events: { id: string; name: string }[] })
   return (
     <form action={formAction} className="flex flex-col gap-4">
       {state?.error && <p className="rounded-[var(--radius-md)] bg-error-100 px-3 py-2 text-xs font-medium text-error-600">{state.error}</p>}
+      <div className="rounded-[var(--radius-md)] border border-border p-4">
+        <p className="mb-3 text-sm font-semibold text-navy-900">Identity Verification (KYC)</p>
+        <KycGate onReadyChange={setKycReady} />
+      </div>
       <FormField label="Event" required>
         <select name="event_id" required className="h-10 w-full rounded-[var(--radius-md)] border border-border bg-surface px-3 text-sm">
           {events.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -32,7 +39,7 @@ export function GameForm({ events }: { events: { id: string; name: string }[] })
       <FormField label="Equipment"><Textarea name="equipment" /></FormField>
       <FormField label="Safety information"><Textarea name="safety_info" /></FormField>
       <FormField label="Description"><Textarea name="description" /></FormField>
-      <Button type="submit" size="lg" loading={pending}>Submit Registration</Button>
+      <Button type="submit" size="lg" loading={pending} disabled={!kycReady}>Submit Registration</Button>
     </form>
   );
 }

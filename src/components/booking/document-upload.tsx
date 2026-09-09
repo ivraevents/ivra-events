@@ -19,7 +19,12 @@ export function DocumentUpload({
 }: {
   kind: DocumentKind;
   label: string;
-  registrationId: string;
+  // Identity documents (aadhaar_front/aadhaar_back/pan) are now stored
+  // per-user rather than per-registration, so this is reusable across
+  // every booking/registration flow and can be omitted — see
+  // 0033_kyc_reuse.sql. Left in place only for the "other" document
+  // kind, which can still be tied to a specific registration.
+  registrationId?: string | null;
   required?: boolean;
   onUploaded?: () => void;
 }) {
@@ -68,7 +73,7 @@ export function DocumentUpload({
 
     const { error: rpcError } = await supabase.rpc("upload_document_version", {
       p_kind: kind,
-      p_registration_id: registrationId,
+      p_registration_id: registrationId ?? null,
       p_storage_path: path,
       p_original_filename: file.name,
       p_mime_type: file.type,

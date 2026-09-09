@@ -16,7 +16,10 @@ export default async function AdminDocumentsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="Document Review" description="Aadhaar and PAN documents awaiting verification." />
+      <PageHeader
+        title="KYC Approval"
+        description="Aadhaar and PAN documents awaiting verification. Approving Aadhaar here verifies that customer for every future booking or registration — they won't be asked to upload it again."
+      />
       {!documents || documents.length === 0 ? (
         <EmptyState icon={FolderLock} title="No documents pending review" />
       ) : (

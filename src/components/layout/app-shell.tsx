@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, LogOut, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
-import { getUserNav, adminNav } from "./nav-items";
+import { getUserNav, getGuestNav, adminNav } from "./nav-items";
 import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
 import { BottomNav } from "./bottom-nav";
@@ -20,6 +20,7 @@ export function AppShell({
   userLabel,
   userEmail,
   hideProvideSection,
+  guest = false,
   children,
 }: {
   navKind: "user" | "admin";
@@ -30,13 +31,18 @@ export function AppShell({
    *  provider registration is then a separate, mutually-exclusive vendor
    *  path and stops showing up in their menu. */
   hideProvideSection?: boolean;
+  /** True for a signed-out visitor browsing the public Home page — same
+   *  app shell (header, bottom nav, sidebar), but the avatar becomes a
+   *  "Register / Sign In" button and account-only nav items are hidden,
+   *  since there's no profile/notifications/etc. to show yet. */
+  guest?: boolean;
   children: React.ReactNode;
 }) {
   // Icon components (functions) can never cross the Server -> Client
   // Component boundary as props — only serializable data can. AppShell is a
   // Client Component ("use client" above), so it imports the icon-bearing
   // nav data itself rather than receiving it from the server layout.
-  const nav = navKind === "admin" ? adminNav : getUserNav({ hideProvideSection });
+  const nav = navKind === "admin" ? adminNav : guest ? getGuestNav() : getUserNav({ hideProvideSection });
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -200,14 +206,25 @@ export function AppShell({
             </span>
             <div className="flex-1" />
             <LanguageSwitcher variant="dark" compact />
-            <NotificationBell dark />
-            <Link
-              href="/profile"
-              aria-label="Profile"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-xs font-bold text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 active:scale-95"
-            >
-              {userLabel.charAt(0).toUpperCase()}
-            </Link>
+            {guest ? (
+              <Link
+                href="/login"
+                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-2xl bg-gradient-to-br from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e] px-4 text-xs font-bold text-[#08090a] shadow-[0_2px_10px_rgba(0,0,0,0.3)] transition-transform active:scale-95"
+              >
+                Register / Sign In
+              </Link>
+            ) : (
+              <>
+                <NotificationBell dark />
+                <Link
+                  href="/profile"
+                  aria-label="Profile"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-xs font-bold text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 active:scale-95"
+                >
+                  {userLabel.charAt(0).toUpperCase()}
+                </Link>
+              </>
+            )}
           </header>
         )}
         <main

@@ -150,15 +150,20 @@ grant execute on function public.reserve_open_stall(uuid, public.stall_size, uui
 -- full_stall_price_paise now come straight from stall_types so a price
 -- shows up the moment the admin sets it — even before any stall exists
 -- to derive it from.
+--
+-- As in 0029: Postgres requires CREATE OR REPLACE VIEW to keep every
+-- existing column in its original name/order/type and only APPEND new
+-- ones at the end, so the 20 columns 0029 already produced (the original
+-- 18 from 0004, plus maps_url/expected_crowd) are kept in that exact
+-- order below, and this migration's 5 new columns are appended after.
 -- ---------------------------------------------------------------------
 create or replace view public.event_listing_v as
 select
   e.id, e.name, e.slug, e.description, e.banner_url, e.venue, e.address, e.city,
-  e.maps_url, e.expected_crowd, e.stall_mode, e.total_stall_capacity, e.full_stall_unit_ratio,
   e.event_date, e.end_date, e.start_time, e.end_time, e.status,
   e.registration_start_at, e.registration_end_at,
   case
-    when e.stall_mode = 'unfixed' then coalesce(e.total_stall_capacity, 0)
+    when e.stall_mode = 'unfixed' then coalesce(e.total_stall_capacity, 0)::bigint
     else count(s.id)
   end as total_stalls,
   case
@@ -170,10 +175,12 @@ select
           else 0 end
         ), 0),
         0
-      )
+      )::bigint
     else count(s.id) filter (where s.status = 'available')
   end as available_stalls,
   (select min(price_paise) from public.stall_types where event_id = e.id) as starting_price_paise,
+  e.maps_url, e.expected_crowd,
+  e.stall_mode, e.total_stall_capacity, e.full_stall_unit_ratio,
   (select price_paise from public.stall_types
      where event_id = e.id and size_type = 'half' order by price_paise limit 1) as half_stall_price_paise,
   (select price_paise from public.stall_types

@@ -7,14 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Input, Textarea, FormField } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { CountdownTimer } from "./countdown-timer";
-import { DocumentUpload } from "./document-upload";
+import { KycGate } from "@/components/kyc/kyc-gate";
 import { PriceBreakdownCard } from "./price-breakdown-card";
 import { upsertVendorRegistration, submitRegistrationForReview, type VendorFormValues } from "@/lib/actions/registration";
 import { formatPaise } from "@/lib/utils";
 import type { PriceBreakdown } from "@/types/domain";
 import { CheckCircle2 } from "lucide-react";
 
-const STEPS = ["Registration", "Documents", "Review & Pay", "Confirmation"];
+const STEPS = ["Registration", "KYC", "Review & Pay", "Confirmation"];
 
 interface PublicSettings {
   application_fee_paise?: number;
@@ -45,7 +45,7 @@ export function BookingWizard({
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [docsUploaded, setDocsUploaded] = useState({ aadhaar_front: false, aadhaar_back: false });
+  const [kycReady, setKycReady] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [breakdown, setBreakdown] = useState<PriceBreakdown | null>(null);
   const [breakdownLoading, setBreakdownLoading] = useState(false);
@@ -261,21 +261,13 @@ export function BookingWizard({
       {step === 1 && registrationId && (
         <Card>
           <CardContent className="flex flex-col gap-4">
-            <p className="font-display text-lg font-semibold text-navy-900">Upload Documents</p>
-            <DocumentUpload
-              kind="aadhaar_front" label="Aadhaar Card — Front" registrationId={registrationId} required
-              onUploaded={() => setDocsUploaded((d) => ({ ...d, aadhaar_front: true }))}
-            />
-            <DocumentUpload
-              kind="aadhaar_back" label="Aadhaar Card — Back" registrationId={registrationId} required
-              onUploaded={() => setDocsUploaded((d) => ({ ...d, aadhaar_back: true }))}
-            />
-            <DocumentUpload kind="pan" label="PAN Card (optional)" registrationId={registrationId} />
+            <p className="font-display text-lg font-semibold text-navy-900">Identity Verification (KYC)</p>
+            <KycGate onReadyChange={setKycReady} />
             <div className="flex gap-3">
               <Button variant="outline" onClick={() => setStep(0)}>Back</Button>
               <Button
                 className="flex-1"
-                disabled={!docsUploaded.aadhaar_front || !docsUploaded.aadhaar_back}
+                disabled={!kycReady}
                 onClick={() => {
                   setStep(2);
                   fetchBreakdown();
