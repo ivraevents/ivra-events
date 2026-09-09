@@ -21,6 +21,8 @@ const en: Dict = {
   "dashboard.browseFleaMarkets": "Browse Flea Markets",
   "dashboard.tagline": "Find your next stall.",
   "dashboard.searchPlaceholder": "Search events, cities or venues",
+  "dashboard.tagline1": "Let's find your next",
+  "dashboard.tagline2": "market!",
 
   "hero.badge": "India's most curated flea markets",
   "hero.title": "Book your stall. Grow your business.",
@@ -118,6 +120,8 @@ const hi: Dict = {
   "dashboard.browseFleaMarkets": "कार्यक्रम देखें",
   "dashboard.tagline": "अपना अगला स्टॉल खोजें।",
   "dashboard.searchPlaceholder": "कार्यक्रम, शहर या स्थान खोजें",
+  "dashboard.tagline1": "अपना अगला",
+  "dashboard.tagline2": "बाज़ार खोजें!",
 
   "hero.badge": "भारत के सबसे चुनिंदा फ्ली मार्केट",
   "hero.title": "अपना स्टॉल बुक करें। अपना व्यवसाय बढ़ाएं।",
@@ -215,6 +219,8 @@ const kn: Dict = {
   "dashboard.browseFleaMarkets": "ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
   "dashboard.tagline": "ನಿಮ್ಮ ಮುಂದಿನ ಸ್ಟಾಲ್ ಹುಡುಕಿ.",
   "dashboard.searchPlaceholder": "ಕಾರ್ಯಕ್ರಮಗಳು, ನಗರಗಳು ಅಥವಾ ಸ್ಥಳಗಳನ್ನು ಹುಡುಕಿ",
+  "dashboard.tagline1": "ನಿಮ್ಮ ಮುಂದಿನ",
+  "dashboard.tagline2": "ಮಾರುಕಟ್ಟೆ ಹುಡುಕಿ!",
 
   "hero.badge": "ಭಾರತದ ಅತ್ಯುತ್ತಮ ಆಯ್ಕೆಯ ಫ್ಲೀ ಮಾರುಕಟ್ಟೆಗಳು",
   "hero.title": "ನಿಮ್ಮ ಸ್ಟಾಲ್ ಬುಕ್ ಮಾಡಿ. ನಿಮ್ಮ ವ್ಯವಹಾರವನ್ನು ಬೆಳೆಸಿ.",

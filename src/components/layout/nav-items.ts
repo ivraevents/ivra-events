@@ -128,12 +128,16 @@ export const adminNav: NavSection[] = [
  * full drawer above) covers everything else, mirroring the Home / Visitors /
  * Task / Report / More pattern from the Navrathan CRM app.
  */
+// Home doubles as the events-discovery screen (greeting, search, city
+// filter, upcoming markets), so there's no separate "Events" tab —
+// "See all" on Home and "Browse Events" in the drawer both go to /events
+// for the full list. Profile is reached from the header avatar, not a
+// tab, so it isn't duplicated here either.
 export const userBottomNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: Home },
-  { label: "Events", href: "/events", icon: CalendarDays },
-  { label: "Bookings", href: "/bookings", icon: Store },
   { label: "Wallet", href: "/wallet", icon: Wallet },
-  { label: "Profile", href: "/profile", icon: User },
+  { label: "Bookings", href: "/bookings", icon: Store },
+  { label: "Support", href: "/support", icon: LifeBuoy },
 ];
 
 export const adminBottomNav: NavItem[] = [

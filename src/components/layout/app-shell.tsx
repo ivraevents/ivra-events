@@ -11,6 +11,7 @@ import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
 import { BottomNav } from "./bottom-nav";
 import { InstallAppButton } from "./install-app-button";
+import { HeaderSearch } from "./header-search";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { LanguageSwitcher } from "@/components/marketing/language-switcher";
 
@@ -59,6 +60,12 @@ export function AppShell({
           </span>
         )}
       </div>
+      {navKind === "user" && (
+        <div className="flex items-center gap-2 px-5 pb-4">
+          <LanguageSwitcher variant="dark" />
+          <InstallAppButton dark />
+        </div>
+      )}
       <nav className="flex-1 overflow-y-auto px-3 pb-4">
         {nav.map((section, i) => (
           <div key={i} className="mb-4">
@@ -154,31 +161,33 @@ export function AppShell({
             </div>
           </header>
         ) : (
-          // User app header: dark, matching the sidebar/bottom-nav chrome.
-          // No account dropdown here — Profile is its own bottom-nav tab,
-          // and Sign out lives at the bottom of the Profile page instead,
-          // so there's only ever one way to reach either.
-          <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-navy-800 bg-navy-950 px-4 sm:px-6">
+          // User app header: dark and deliberately simple — hamburger for
+          // the full menu, one search box reachable from anywhere, the
+          // bell, and the avatar. No account dropdown — Profile is one tap
+          // from the avatar, and Sign out lives at the bottom of the
+          // Profile page instead, so there's only ever one way to reach
+          // either. Language + Add to Home Screen moved into the drawer
+          // menu so this bar stays uncluttered.
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-navy-800 bg-navy-950 px-4 sm:px-6">
             <button
-              className="rounded-md p-2 text-cloud-300 hover:bg-white/10 lg:hidden"
+              className="shrink-0 rounded-md p-2 text-cloud-300 hover:bg-white/10 lg:hidden"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
             >
               <Menu className="h-5 w-5" />
             </button>
-            <div className="hidden lg:block" />
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <LanguageSwitcher variant="dark" />
-              <InstallAppButton dark />
-              <NotificationBell dark />
-              <Link
-                href="/profile"
-                aria-label="Profile"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-800 text-xs font-semibold text-white ring-1 ring-white/10 hover:ring-gold-400"
-              >
-                {userLabel.charAt(0).toUpperCase()}
-              </Link>
+            <div className="hidden shrink-0 lg:block">
+              <Logo dark size={26} />
             </div>
+            <HeaderSearch />
+            <NotificationBell dark />
+            <Link
+              href="/profile"
+              aria-label="Profile"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy-800 text-xs font-semibold text-white ring-1 ring-white/10 hover:ring-gold-400"
+            >
+              {userLabel.charAt(0).toUpperCase()}
+            </Link>
           </header>
         )}
         <main className="flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">{children}</main>
