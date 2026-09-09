@@ -51,7 +51,7 @@ export function AppShell({
 
   const SidebarContent = (
     <div className="flex h-full flex-col bg-navy-950 text-cloud-100">
-      <div className="flex items-center justify-between px-5 py-5">
+      <div className="flex items-center justify-between px-5 pb-5 pt-[calc(env(safe-area-inset-top)+1.25rem)]">
         <Logo dark size={32} />
         {badge && (
           <span className="rounded-full bg-gold-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-400">
@@ -114,7 +114,7 @@ export function AppShell({
 
       <div className="flex min-w-0 flex-1 flex-col">
         {navKind === "admin" ? (
-          <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-surface/90 px-4 backdrop-blur sm:px-6">
+          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-surface/90 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] backdrop-blur sm:px-6">
             <button
               className="rounded-md p-2 text-charcoal-500 hover:bg-surface-muted lg:hidden"
               onClick={() => setMobileOpen(true)}
@@ -169,7 +169,7 @@ export function AppShell({
           // places. The avatar goes straight to Profile; sign out lives at
           // the bottom of that page, and language only lives here, not the
           // drawer too.
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-[#242629] bg-[#101214] px-4 sm:px-6">
+          <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-[#242629] bg-[#101214] px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] sm:px-6">
             {/* Clean, neutral ambient depth — no color wash, just two very
                 faint soft-white glows, closer to the calm dark backdrop of
                 the Navrathan reference than the earlier gold-tinted one. No
@@ -177,7 +177,12 @@ export function AppShell({
                 language/notification dropdowns that pop out below it. A
                 slightly lighter "chrome" tone than the page body below it
                 (and the bottom bar) so header / content / footer each read
-                as a distinct layer instead of blending into one slab. */}
+                as a distinct layer instead of blending into one slab.
+                pt- uses safe-area-inset-top (needed since the viewport now
+                uses viewport-fit=cover for the bottom nav's safe area) so
+                the header sits below the notch/status bar instead of
+                underneath it — that was the bug: menu button unreachable,
+                overlapping the phone's own status bar. */}
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
               <div className="absolute -left-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-white/[0.05] blur-3xl [animation-duration:7s]" />
               <div className="absolute -right-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-white/[0.04] blur-3xl [animation-duration:9s]" />
@@ -223,7 +228,7 @@ export function AppShell({
 
       {mobileOpen && (
         <button
-          className="fixed right-4 top-4 z-50 rounded-full bg-navy-950 p-2 text-white lg:hidden"
+          className="fixed right-4 top-[calc(env(safe-area-inset-top)+1rem)] z-50 rounded-full bg-navy-950 p-2 text-white lg:hidden"
           onClick={() => setMobileOpen(false)}
           aria-label="Close menu"
         >
