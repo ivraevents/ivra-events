@@ -170,19 +170,20 @@ export function AppShell({
           // the bottom of that page, and language only lives here, not the
           // drawer too.
           <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-[#242629] bg-[#08090a] px-4 sm:px-6">
-            {/* Same soft ambient glow as the Home page, echoed here so the
-                header doesn't feel flat against it. No overflow-hidden on
-                the header itself — that would clip the language/notification
-                dropdowns that pop out below it. */}
+            {/* Clean, neutral ambient depth — no color wash, just two very
+                faint soft-white glows, closer to the calm dark backdrop of
+                the Navrathan reference than the earlier gold-tinted one. No
+                overflow-hidden on the header itself — that would clip the
+                language/notification dropdowns that pop out below it. */}
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-              <div className="absolute -left-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-[#ffb23d]/15 blur-3xl [animation-duration:6s]" />
-              <div className="absolute -right-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-[#ff6a3d]/10 blur-3xl [animation-duration:8s]" />
+              <div className="absolute -left-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-white/[0.05] blur-3xl [animation-duration:7s]" />
+              <div className="absolute -right-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-white/[0.04] blur-3xl [animation-duration:9s]" />
             </div>
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-[#ffd83d]/40 hover:bg-white/10 hover:text-white active:scale-95"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 hover:text-white active:scale-95"
             >
               <Menu className="h-[18px] w-[18px]" />
             </button>
@@ -195,7 +196,7 @@ export function AppShell({
             <Link
               href="/profile"
               aria-label="Profile"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-xs font-bold text-[#08090a] shadow-[0_3px_12px_rgba(255,216,61,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-[#ffe9a3] active:scale-95"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-sm font-bold text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 active:scale-95"
             >
               {userLabel.charAt(0).toUpperCase()}
             </Link>

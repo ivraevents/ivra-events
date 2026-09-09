@@ -48,10 +48,10 @@ export function BottomNav({
               <span
                 className={cn(
                   "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] ring-[5px] ring-[#08090a] transition-transform active:scale-90",
-                  "shadow-[0_10px_24px_rgba(255,216,61,0.55)]"
+                  "shadow-[0_6px_16px_rgba(255,216,61,0.35)]"
                 )}
               >
-                <Icon className="h-6 w-6" />
+                <Icon className="h-5 w-5" />
               </span>
               <span className={cn("mt-0.5", active ? "font-semibold text-[#ffd83d]" : "text-[#a2a5a8]")}>
                 {item.label}
@@ -69,13 +69,13 @@ export function BottomNav({
             {dark ? (
               <span
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-2xl border transition-all duration-200 active:scale-90",
+                  "flex h-10 w-10 items-center justify-center rounded-2xl border transition-all duration-200 active:scale-90",
                   active
-                    ? "border-transparent bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] shadow-[0_6px_16px_rgba(255,216,61,0.4)] -translate-y-0.5"
+                    ? "border-transparent bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] shadow-[0_4px_12px_rgba(255,216,61,0.3)] -translate-y-0.5"
                     : "border-white/5 bg-white/[0.04] text-[#a2a5a8]"
                 )}
               >
-                <Icon className="h-[19px] w-[19px]" />
+                <Icon className="h-[17px] w-[17px]" />
               </span>
             ) : (
               <span

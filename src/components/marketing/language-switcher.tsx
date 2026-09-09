@@ -26,7 +26,7 @@ export function LanguageSwitcher({
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-label="Change language"
-          className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[11px] font-bold text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-[#ffd83d]/40 hover:bg-white/10 hover:text-white active:scale-95"
+          className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[11px] font-bold text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 hover:text-white active:scale-95"
         >
           {current.native}
         </button>
@@ -43,7 +43,7 @@ export function LanguageSwitcher({
                   }}
                   className={cn(
                     "flex w-full items-center rounded-xl px-3 py-2 text-left text-xs font-semibold transition-colors",
-                    locale === l.code ? "bg-[#ffd83d] text-[#08090a]" : "text-[#a2a5a8] hover:bg-white/5 hover:text-white"
+                    locale === l.code ? "bg-white text-[#08090a]" : "text-[#a2a5a8] hover:bg-white/5 hover:text-white"
                   )}
                 >
                   {l.native}

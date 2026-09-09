@@ -61,7 +61,7 @@ export function NotificationBell({ dark = false }: { dark?: boolean }) {
         className={cn(
           "relative flex items-center justify-center transition-all active:scale-95",
           dark
-            ? "h-10 w-10 rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm hover:border-[#ffd83d]/40 hover:bg-white/10 hover:text-white"
+            ? "h-11 w-11 rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm hover:border-white/20 hover:bg-white/10 hover:text-white"
             : "rounded-full p-2 text-charcoal-500 hover:bg-surface-muted"
         )}
         aria-label="Notifications"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarDays, Store, Ticket, ShieldCheck, type LucideIcon } from "lucide-react";
+import { CalendarDays, Store, ShieldCheck, type LucideIcon } from "lucide-react";
 
 /** Animates 0 -> target once on mount — the "running" counter effect. */
 function useCountUp(target: number, durationMs = 1200) {
@@ -42,29 +42,26 @@ function StatCard({ icon: Icon, target, label }: { icon: LucideIcon; target: num
   );
 }
 
+// These three figures are the business's own track record across its
+// offline markets over the years — stated directly by the owner, not a
+// live database count (the app itself is new, so its own event/stall
+// tables don't yet reflect years of history). Update the numbers here if
+// the owner gives revised figures; there's nothing elsewhere to keep in
+// sync since they aren't derived from any table.
+const EVENTS_HOSTED = 2000;
+const STALLS_LISTED = 5000;
+const TRUSTED_CUSTOMERS = 9000;
+
 /**
- * "Our Statistics" section — same badge + heading + 4-card layout as the
- * reference design, but every number is real and live from the database
- * (no marketing placeholders like "10,000+ Footfall" or "98% Satisfaction").
- * Add or update events, stalls and registrations in Admin and these counts
- * update on their own — nothing here is typed in by hand.
+ * "Our Statistics" section — badge, heading and 3-card layout, styled to
+ * match the reference design.
  */
-export function HomeStatistics({
-  totalEvents,
-  totalStalls,
-  stallsBooked,
-  verifiedCustomers,
-}: {
-  totalEvents: number;
-  totalStalls: number;
-  stallsBooked: number;
-  verifiedCustomers: number;
-}) {
+export function HomeStatistics() {
   return (
     <div>
       <div className="flex flex-col items-center text-center">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ffd83d]/25 bg-[#ffd83d]/10 px-3 py-1 text-[10px] font-semibold text-[#ffd83d]">
-          📊 Live Platform Stats
+          📊 Trusted by Thousands
         </span>
         <h2 className="mt-2.5 font-display text-xl font-bold text-white">
           Our <span className="text-[#ffd83d]">Statistics</span>
@@ -72,11 +69,10 @@ export function HomeStatistics({
         <p className="mt-1 text-xs text-[#a2a5a8]">Connecting vendors with events across India</p>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard icon={CalendarDays} target={totalEvents} label="Events Hosted" />
-        <StatCard icon={Store} target={totalStalls} label="Stalls Listed" />
-        <StatCard icon={Ticket} target={stallsBooked} label="Stalls Booked" />
-        <StatCard icon={ShieldCheck} target={verifiedCustomers} label="Verified Customers" />
+      <div className="mt-4 grid grid-cols-3 gap-3">
+        <StatCard icon={CalendarDays} target={EVENTS_HOSTED} label="Events Hosted" />
+        <StatCard icon={Store} target={STALLS_LISTED} label="Stalls Listed" />
+        <StatCard icon={ShieldCheck} target={TRUSTED_CUSTOMERS} label="Trusted" />
       </div>
     </div>
   );

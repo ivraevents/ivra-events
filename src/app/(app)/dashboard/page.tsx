@@ -43,20 +43,6 @@ export default async function DashboardPage() {
     }
   }
 
-  // "Our Statistics" section — every number is a real, live count (no
-  // marketing placeholders): events + stalls + stalls booked come straight
-  // from the public event listing, verified customers from a SECURITY
-  // DEFINER RPC (0028) since the underlying registrations table is
-  // select-own only. Add/update events, stalls or registrations in Admin
-  // and these all move on their own.
-  const { data: statsData } = await supabase.from("event_listing_v").select("total_stalls, available_stalls");
-  const statsRows = (statsData ?? []) as Array<{ total_stalls: number; available_stalls: number }>;
-  const totalEvents = statsRows.length;
-  const totalStalls = statsRows.reduce((sum, r) => sum + (r.total_stalls ?? 0), 0);
-  const stallsBooked = statsRows.reduce((sum, r) => sum + ((r.total_stalls ?? 0) - (r.available_stalls ?? 0)), 0);
-
-  const { data: verifiedCustomers } = await supabase.rpc("get_verified_customer_count");
-
   const hour = Number(
     new Date().toLocaleString("en-IN", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" })
   );
@@ -64,13 +50,13 @@ export default async function DashboardPage() {
 
   return (
     <div className="relative -mx-4 -mt-4 overflow-hidden rounded-b-[1.5rem] bg-[#08090a] px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
-      {/* Subtle "festive" ambient glow — soft, slow-pulsing color orbs behind
-          the content. Pure CSS (no JS), positioned so they never sit under
-          text or interactive elements, just tint the dark background. */}
+      {/* Clean, neutral ambient depth — soft white glows, not colored, so
+          the page reads calm and premium (like the Navrathan reference)
+          instead of tinting everything gold. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-16 -top-24 h-64 w-64 animate-pulse rounded-full bg-[#ffb23d]/20 blur-3xl [animation-duration:6s]" />
-        <div className="absolute -right-20 top-10 h-72 w-72 animate-pulse rounded-full bg-[#ff6a3d]/15 blur-3xl [animation-duration:8s]" />
-        <div className="absolute bottom-0 left-1/3 h-56 w-56 animate-pulse rounded-full bg-[#ffd83d]/10 blur-3xl [animation-duration:7s]" />
+        <div className="absolute -left-16 -top-24 h-64 w-64 animate-pulse rounded-full bg-white/[0.04] blur-3xl [animation-duration:7s]" />
+        <div className="absolute -right-20 top-10 h-72 w-72 animate-pulse rounded-full bg-white/[0.03] blur-3xl [animation-duration:9s]" />
+        <div className="absolute bottom-0 left-1/3 h-56 w-56 animate-pulse rounded-full bg-white/[0.03] blur-3xl [animation-duration:8s]" />
       </div>
 
       <div className="relative flex flex-col gap-6">
@@ -78,12 +64,7 @@ export default async function DashboardPage() {
         <HomeOffersSlider />
         <HomeMarkets events={events} pricing={pricing} />
         <HomeInstagramCard />
-        <HomeStatistics
-          totalEvents={totalEvents}
-          totalStalls={totalStalls}
-          stallsBooked={stallsBooked}
-          verifiedCustomers={verifiedCustomers ?? 0}
-        />
+        <HomeStatistics />
       </div>
     </div>
   );
