@@ -59,7 +59,7 @@ export default async function DashboardPage() {
   const greetingKey = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
 
   return (
-    <div className="-mx-4 -mt-4 flex flex-col gap-6 rounded-b-[1.5rem] bg-navy-950 px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
+    <div className="-mx-4 -mt-4 flex flex-col gap-6 rounded-b-[1.5rem] bg-[#08090a] px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
       <HomeHeader greetingKey={greetingKey} firstName={firstName} />
       <HomeMarkets events={events} pricing={pricing} />
       <HomeInstagramCard />

@@ -61,7 +61,7 @@ export function NotificationBell({ dark = false }: { dark?: boolean }) {
         className={cn(
           "relative flex items-center justify-center transition-all active:scale-95",
           dark
-            ? "h-10 w-10 rounded-2xl border border-white/10 bg-white/[0.06] text-cloud-200 shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm hover:border-gold-400/40 hover:bg-white/10 hover:text-white"
+            ? "h-10 w-10 rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm hover:border-[#ffd83d]/40 hover:bg-white/10 hover:text-white"
             : "rounded-full p-2 text-charcoal-500 hover:bg-surface-muted"
         )}
         aria-label="Notifications"
@@ -71,7 +71,7 @@ export function NotificationBell({ dark = false }: { dark?: boolean }) {
           <span
             className={cn(
               "absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-br from-[#ff6b6b] to-[#e63946] text-[9px] font-bold text-white",
-              dark && "ring-2 ring-navy-950"
+              dark && "ring-2 ring-[#08090a]"
             )}
           >
             {unread > 9 ? "9+" : unread}

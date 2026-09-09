@@ -28,14 +28,14 @@ function StatItem({ icon, target, label }: { icon: string; target: number; label
   const value = useCountUp(target);
   return (
     <div className="flex flex-1 flex-col items-center gap-1.5 px-1.5 text-center">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-500/25 bg-gold-500/10 text-base">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#ffd83d]/25 bg-[#ffd83d]/10 text-base">
         {icon}
       </span>
       <span className="font-display text-lg font-black tracking-tight text-white sm:text-xl">
         {value.toLocaleString("en-IN")}
         {target > 0 && "+"}
       </span>
-      <span className="text-[9px] font-semibold leading-tight text-charcoal-300">{label}</span>
+      <span className="text-[9px] font-semibold leading-tight text-[#75797d]">{label}</span>
     </div>
   );
 }
@@ -56,7 +56,7 @@ export function HomeTrustStrip({
   stallsBooked: number;
 }) {
   return (
-    <div className="flex items-stretch justify-between divide-x divide-white/10 rounded-[1.25rem] border border-navy-700 bg-navy-900 px-2 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+    <div className="flex items-stretch justify-between divide-x divide-white/10 rounded-[1.25rem] border border-[#242629] bg-[#131518] px-2 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
       <StatItem icon="🏬" target={totalStalls} label="Stalls" />
       <StatItem icon="✅" target={verifiedCustomers} label="Verified Customers" />
       <StatItem icon="🎟️" target={stallsBooked} label="Stalls Booked" />

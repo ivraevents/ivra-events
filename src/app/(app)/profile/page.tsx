@@ -30,16 +30,16 @@ export default async function ProfilePage() {
   const initial = (profile?.full_name || profile?.email || "U").charAt(0).toUpperCase();
 
   return (
-    <div className="-mx-4 -mt-4 flex flex-col gap-5 rounded-b-[1.5rem] bg-navy-950 px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
-      <div className="flex items-center justify-between gap-4 rounded-[var(--radius-lg)] border border-white/10 bg-navy-900 p-4">
+    <div className="-mx-4 -mt-4 flex flex-col gap-5 rounded-b-[1.5rem] bg-[#08090a] px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
+      <div className="flex items-center justify-between gap-4 rounded-[var(--radius-lg)] border border-white/10 bg-[#131518] p-4">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-500 text-lg font-semibold text-navy-950">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#ffd83d] text-lg font-semibold text-[#08090a]">
             {initial}
           </span>
           <div className="min-w-0">
             <p className="truncate font-display text-base font-semibold text-white">{profile?.full_name || "Your Account"}</p>
-            <p className="truncate text-xs text-cloud-300">{profile?.email}</p>
-            {profile?.mobile && <p className="text-xs text-cloud-300">{profile.mobile}</p>}
+            <p className="truncate text-xs text-[#a2a5a8]">{profile?.email}</p>
+            {profile?.mobile && <p className="text-xs text-[#a2a5a8]">{profile.mobile}</p>}
           </div>
         </div>
         <Link
@@ -51,23 +51,23 @@ export default async function ProfilePage() {
         </Link>
       </div>
 
-      <p className="-mt-2 text-xs text-charcoal-300">Member since {memberSince}</p>
+      <p className="-mt-2 text-xs text-[#75797d]">Member since {memberSince}</p>
 
-      <div className="flex items-center justify-between rounded-[var(--radius-lg)] border border-white/10 bg-navy-900 px-4 py-3.5">
-        <span className="flex items-center gap-2.5 text-sm font-medium text-cloud-300">
+      <div className="flex items-center justify-between rounded-[var(--radius-lg)] border border-white/10 bg-[#131518] px-4 py-3.5">
+        <span className="flex items-center gap-2.5 text-sm font-medium text-[#a2a5a8]">
           <Bell className="h-4 w-4" /> Notifications
         </span>
-        <span className="rounded-full bg-success-100 px-2.5 py-1 text-xs font-semibold text-success-600">On</span>
+        <span className="rounded-full bg-[#43e59a]/15 px-2.5 py-1 text-xs font-semibold text-[#43e59a]">On</span>
       </div>
 
-      <div className="flex flex-col divide-y divide-white/10 overflow-hidden rounded-[var(--radius-lg)] border border-white/10 bg-navy-900">
+      <div className="flex flex-col divide-y divide-white/10 overflow-hidden rounded-[var(--radius-lg)] border border-white/10 bg-[#131518]">
         {LINKS.map(({ label, href, icon: Icon }) => (
           <Link
             key={href}
             href={href}
             className="flex items-center gap-3 px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
           >
-            <Icon className="h-4 w-4 text-gold-400" /> {label}
+            <Icon className="h-4 w-4 text-[#ffd83d]" /> {label}
           </Link>
         ))}
       </div>

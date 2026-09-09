@@ -30,7 +30,7 @@ export function BottomNav({
     <nav
       className={cn(
         "fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t pb-[env(safe-area-inset-bottom)] lg:hidden",
-        dark ? "border-navy-800 bg-navy-950/95 backdrop-blur-xl" : "border-border bg-surface"
+        dark ? "border-[#242629] bg-[#08090a]/95 backdrop-blur-xl" : "border-border bg-surface"
       )}
       aria-label="Primary"
     >
@@ -47,13 +47,13 @@ export function BottomNav({
             >
               <span
                 className={cn(
-                  "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-500 to-[#ff9135] text-navy-950 ring-[5px] ring-navy-950 transition-transform active:scale-90",
-                  "shadow-[0_10px_24px_rgba(201,152,47,0.55)]"
+                  "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-[#08090a] ring-[5px] ring-[#08090a] transition-transform active:scale-90",
+                  "shadow-[0_10px_24px_rgba(255,216,61,0.55)]"
                 )}
               >
                 <Icon className="h-6 w-6" />
               </span>
-              <span className={cn("mt-0.5", active ? "font-semibold text-gold-400" : "text-cloud-300")}>
+              <span className={cn("mt-0.5", active ? "font-semibold text-[#ffd83d]" : "text-[#a2a5a8]")}>
                 {item.label}
               </span>
             </Link>
@@ -71,8 +71,8 @@ export function BottomNav({
                 className={cn(
                   "flex h-11 w-11 items-center justify-center rounded-2xl border transition-all duration-200 active:scale-90",
                   active
-                    ? "border-transparent bg-gradient-to-br from-gold-500 to-[#ff9135] text-navy-950 shadow-[0_6px_16px_rgba(201,152,47,0.4)] -translate-y-0.5"
-                    : "border-white/5 bg-white/[0.04] text-cloud-300"
+                    ? "border-transparent bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-[#08090a] shadow-[0_6px_16px_rgba(255,216,61,0.4)] -translate-y-0.5"
+                    : "border-white/5 bg-white/[0.04] text-[#a2a5a8]"
                 )}
               >
                 <Icon className="h-[19px] w-[19px]" />
@@ -92,10 +92,10 @@ export function BottomNav({
                 "transition-colors",
                 active
                   ? dark
-                    ? "font-semibold text-gold-400"
+                    ? "font-semibold text-[#ffd83d]"
                     : "font-semibold text-navy-900"
                   : dark
-                    ? "text-cloud-300"
+                    ? "text-[#a2a5a8]"
                     : "text-charcoal-500"
               )}
             >

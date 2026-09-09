@@ -169,17 +169,17 @@ export function AppShell({
           // places. The avatar goes straight to Profile; sign out lives at
           // the bottom of that page, and language only lives here, not the
           // drawer too.
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-navy-800 bg-navy-950 px-4 sm:px-6">
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-[#242629] bg-[#08090a] px-4 sm:px-6">
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-cloud-200 shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-gold-400/40 hover:bg-white/10 hover:text-white active:scale-95"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-[#ffd83d]/40 hover:bg-white/10 hover:text-white active:scale-95"
             >
               <Menu className="h-[18px] w-[18px]" />
             </button>
             <span className="truncate font-display text-base font-bold tracking-wide text-white sm:text-lg">
-              IVRA <span className="text-gold-400">EVENTS</span>
+              IVRA <span className="text-[#ffd83d]">EVENTS</span>
             </span>
             <div className="flex-1" />
             <LanguageSwitcher variant="dark" compact />
@@ -187,7 +187,7 @@ export function AppShell({
             <Link
               href="/profile"
               aria-label="Profile"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-500 to-[#ff9135] text-xs font-bold text-navy-950 shadow-[0_3px_12px_rgba(201,152,47,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-gold-300 active:scale-95"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-xs font-bold text-[#08090a] shadow-[0_3px_12px_rgba(255,216,61,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-[#ffe9a3] active:scale-95"
             >
               {userLabel.charAt(0).toUpperCase()}
             </Link>
