@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { HomeHeader } from "@/components/dashboard/home-header";
+import { HomeOffersSlider } from "@/components/dashboard/home-offers-slider";
 import { HomeMarkets, type EventPricing } from "@/components/dashboard/home-markets";
 import { HomeInstagramCard } from "@/components/dashboard/home-instagram-card";
 import { HomeTrustStrip } from "@/components/dashboard/home-trust-strip";
@@ -59,15 +60,27 @@ export default async function DashboardPage() {
   const greetingKey = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
 
   return (
-    <div className="-mx-4 -mt-4 flex flex-col gap-6 rounded-b-[1.5rem] bg-[#08090a] px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
-      <HomeHeader greetingKey={greetingKey} firstName={firstName} />
-      <HomeMarkets events={events} pricing={pricing} />
-      <HomeInstagramCard />
-      <HomeTrustStrip
-        totalStalls={totalStalls}
-        verifiedCustomers={verifiedCustomers ?? 0}
-        stallsBooked={stallsBooked}
-      />
+    <div className="relative -mx-4 -mt-4 overflow-hidden rounded-b-[1.5rem] bg-[#08090a] px-4 pb-8 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
+      {/* Subtle "festive" ambient glow — soft, slow-pulsing color orbs behind
+          the content. Pure CSS (no JS), positioned so they never sit under
+          text or interactive elements, just tint the dark background. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-16 -top-24 h-64 w-64 animate-pulse rounded-full bg-[#ffb23d]/20 blur-3xl [animation-duration:6s]" />
+        <div className="absolute -right-20 top-10 h-72 w-72 animate-pulse rounded-full bg-[#ff6a3d]/15 blur-3xl [animation-duration:8s]" />
+        <div className="absolute bottom-0 left-1/3 h-56 w-56 animate-pulse rounded-full bg-[#ffd83d]/10 blur-3xl [animation-duration:7s]" />
+      </div>
+
+      <div className="relative flex flex-col gap-6">
+        <HomeHeader greetingKey={greetingKey} firstName={firstName} />
+        <HomeOffersSlider />
+        <HomeMarkets events={events} pricing={pricing} />
+        <HomeInstagramCard />
+        <HomeTrustStrip
+          totalStalls={totalStalls}
+          verifiedCustomers={verifiedCustomers ?? 0}
+          stallsBooked={stallsBooked}
+        />
+      </div>
     </div>
   );
 }

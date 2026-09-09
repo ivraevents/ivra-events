@@ -3,7 +3,7 @@ import {
   LayoutDashboard, CalendarDays, ClipboardList, Store, User, FileText,
   Wallet, Receipt, Bell, LifeBuoy, Users, PackageSearch, MapPinned,
   Crown, Handshake, Tent, Gamepad2, FolderLock, CreditCard, BadgePercent,
-  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home, Info, Lock, Tag,
+  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home, Info, Lock, Gift,
 } from "lucide-react";
 
 export interface NavItem {
@@ -137,7 +137,7 @@ export const adminNav: NavSection[] = [
 // isn't duplicated here.
 export const userBottomNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: Home },
-  { label: "Offer", href: "/events", icon: Tag },
+  { label: "Offer", href: "/events", icon: Gift },
   { label: "Booking", href: "/bookings", icon: Store, raised: true },
   { label: "Wallet", href: "/wallet", icon: Wallet },
   { label: "Support", href: "/support", icon: LifeBuoy },

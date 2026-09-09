@@ -170,6 +170,14 @@ export function AppShell({
           // the bottom of that page, and language only lives here, not the
           // drawer too.
           <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-[#242629] bg-[#08090a] px-4 sm:px-6">
+            {/* Same soft ambient glow as the Home page, echoed here so the
+                header doesn't feel flat against it. No overflow-hidden on
+                the header itself — that would clip the language/notification
+                dropdowns that pop out below it. */}
+            <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+              <div className="absolute -left-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-[#ffb23d]/15 blur-3xl [animation-duration:6s]" />
+              <div className="absolute -right-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-[#ff6a3d]/10 blur-3xl [animation-duration:8s]" />
+            </div>
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
@@ -187,7 +195,7 @@ export function AppShell({
             <Link
               href="/profile"
               aria-label="Profile"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-xs font-bold text-[#08090a] shadow-[0_3px_12px_rgba(255,216,61,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-[#ffe9a3] active:scale-95"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-xs font-bold text-[#08090a] shadow-[0_3px_12px_rgba(255,216,61,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-[#ffe9a3] active:scale-95"
             >
               {userLabel.charAt(0).toUpperCase()}
             </Link>

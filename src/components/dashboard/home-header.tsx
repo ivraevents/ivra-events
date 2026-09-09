@@ -65,7 +65,7 @@ export function HomeHeader({
         <button
           type="submit"
           aria-label="Search"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-[#08090a] shadow-[0_4px_14px_rgba(201,152,47,0.4)] transition-transform active:scale-95"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] shadow-[0_4px_14px_rgba(255,178,61,0.45)] transition-transform active:scale-95"
         >
           <Search className="h-[18px] w-[18px]" />
         </button>

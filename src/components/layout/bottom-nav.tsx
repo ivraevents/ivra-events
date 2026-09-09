@@ -47,7 +47,7 @@ export function BottomNav({
             >
               <span
                 className={cn(
-                  "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-[#08090a] ring-[5px] ring-[#08090a] transition-transform active:scale-90",
+                  "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] ring-[5px] ring-[#08090a] transition-transform active:scale-90",
                   "shadow-[0_10px_24px_rgba(255,216,61,0.55)]"
                 )}
               >
@@ -71,7 +71,7 @@ export function BottomNav({
                 className={cn(
                   "flex h-11 w-11 items-center justify-center rounded-2xl border transition-all duration-200 active:scale-90",
                   active
-                    ? "border-transparent bg-gradient-to-br from-[#ffd83d] to-[#ff9135] text-[#08090a] shadow-[0_6px_16px_rgba(255,216,61,0.4)] -translate-y-0.5"
+                    ? "border-transparent bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] shadow-[0_6px_16px_rgba(255,216,61,0.4)] -translate-y-0.5"
                     : "border-white/5 bg-white/[0.04] text-[#a2a5a8]"
                 )}
               >

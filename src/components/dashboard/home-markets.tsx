@@ -179,7 +179,7 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
                       </Link>
                       <Link
                         href={`/events/${event.slug}`}
-                        className="flex h-11 items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#ffd83d] to-[#ff9135] text-xs font-bold text-[#08090a]"
+                        className="flex h-11 items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-xs font-bold text-[#08090a]"
                       >
                         BOOK IT <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
