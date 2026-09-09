@@ -26,7 +26,7 @@ export function LanguageSwitcher({
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-label="Change language"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-[11px] font-bold text-cloud-200 shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-gold-400/40 hover:bg-white/10 hover:text-white active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[11px] font-bold text-cloud-200 shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-gold-400/40 hover:bg-white/10 hover:text-white active:scale-95"
         >
           {current.native}
         </button>

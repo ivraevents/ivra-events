@@ -59,10 +59,10 @@ export function NotificationBell({ dark = false }: { dark?: boolean }) {
       <button
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "relative flex items-center justify-center rounded-full transition-all active:scale-95",
+          "relative flex items-center justify-center transition-all active:scale-95",
           dark
-            ? "h-10 w-10 border border-white/10 bg-white/[0.06] text-cloud-200 shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm hover:border-gold-400/40 hover:bg-white/10 hover:text-white"
-            : "p-2 text-charcoal-500 hover:bg-surface-muted"
+            ? "h-10 w-10 rounded-2xl border border-white/10 bg-white/[0.06] text-cloud-200 shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm hover:border-gold-400/40 hover:bg-white/10 hover:text-white"
+            : "rounded-full p-2 text-charcoal-500 hover:bg-surface-muted"
         )}
         aria-label="Notifications"
       >

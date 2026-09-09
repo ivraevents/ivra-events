@@ -160,40 +160,28 @@ export function AppShell({
           </header>
         ) : (
           // User app header: dark, branded, and built from a consistent set
-          // of premium pill/circle icon buttons — hamburger for the full
-          // menu, the logo (compact mark on mobile, full wordmark on
-          // desktop), language, notifications, and the avatar. Search moved
-          // down onto the Home screen itself, right under the greeting,
-          // where it's much more obvious than a small box up here — so it's
-          // not duplicated in both places. No account dropdown — Profile is
-          // one tap from the avatar, and Sign out lives at the bottom of
-          // the Profile page instead, so there's only ever one way to reach
-          // either, and only one way to change language (here, not
-          // duplicated in the drawer).
+          // of premium squircle icon buttons — no hamburger clutter. The
+          // logo is front and center at full size, and the avatar itself
+          // opens the full menu (Profile is one of its links, alongside
+          // Notifications, Payments, Documents, etc.) so there's exactly
+          // one nav trigger on this bar, not two. Search moved down onto
+          // the Home screen itself, right under the greeting, where it's
+          // much more obvious than a small box up here — so it's not
+          // duplicated in both places. Sign out lives at the bottom of the
+          // Profile page, and language only lives here, not the drawer too.
           <header className="sticky top-0 z-30 flex h-16 items-center gap-2.5 border-b border-navy-800 bg-navy-950 px-4 sm:gap-3 sm:px-6">
-            <button
-              className="shrink-0 rounded-full p-2 text-cloud-300 transition-colors hover:bg-white/10 lg:hidden"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-            <div className="shrink-0 lg:hidden">
-              <Logo dark size={32} withWordmark={false} />
-            </div>
-            <div className="hidden shrink-0 lg:block">
-              <Logo dark size={26} />
-            </div>
+            <Logo dark size={34} />
             <div className="flex-1" />
             <LanguageSwitcher variant="dark" compact />
             <NotificationBell dark />
-            <Link
-              href="/profile"
-              aria-label="Profile"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-500 to-[#ff9135] text-xs font-bold text-navy-950 shadow-[0_3px_12px_rgba(201,152,47,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-gold-300 active:scale-95"
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-500 to-[#ff9135] text-xs font-bold text-navy-950 shadow-[0_3px_12px_rgba(201,152,47,0.4)] ring-1 ring-white/10 transition-all hover:ring-2 hover:ring-gold-300 active:scale-95"
             >
               {userLabel.charAt(0).toUpperCase()}
-            </Link>
+            </button>
           </header>
         )}
         <main className="flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">{children}</main>
