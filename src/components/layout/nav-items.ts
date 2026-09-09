@@ -3,13 +3,17 @@ import {
   LayoutDashboard, CalendarDays, ClipboardList, Store, User, FileText,
   Wallet, Receipt, Bell, LifeBuoy, Users, PackageSearch, MapPinned,
   Crown, Handshake, Tent, Gamepad2, FolderLock, CreditCard, BadgePercent,
-  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home, Info, Lock,
+  Ticket, Headphones, ScrollText, Settings, ShieldAlert, Home, Info, Lock, Tag,
 } from "lucide-react";
 
 export interface NavItem {
   label: string;
   href: string;
   icon: LucideIcon;
+  /** Renders as the raised, oversized "floating" button in the middle of
+   *  the bottom bar instead of an inline tab — at most one item should set
+   *  this. */
+  raised?: boolean;
 }
 
 export interface NavSection {
@@ -128,14 +132,13 @@ export const adminNav: NavSection[] = [
  * full drawer above) covers everything else, mirroring the Home / Visitors /
  * Task / Report / More pattern from the Navrathan CRM app.
  */
-// Home doubles as the events-discovery screen (greeting, search, city
-// filter, upcoming markets), so there's no separate "Events" tab —
-// "See all" on Home and "Browse Events" in the drawer both go to /events
-// for the full list. Profile is reached from the header avatar, not a
-// tab, so it isn't duplicated here either.
+// 5 tabs, with "Booking" rendered as the raised floating button in the
+// middle. Profile is reached from the header avatar, not a tab, so it
+// isn't duplicated here.
 export const userBottomNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: Home },
-  { label: "Booking", href: "/bookings", icon: Store },
+  { label: "Offer", href: "/events", icon: Tag },
+  { label: "Booking", href: "/bookings", icon: Store, raised: true },
   { label: "Wallet", href: "/wallet", icon: Wallet },
   { label: "Support", href: "/support", icon: LifeBuoy },
 ];

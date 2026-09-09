@@ -7,11 +7,13 @@ import { cn } from "@/lib/utils";
 import { userBottomNav, adminBottomNav } from "./nav-items";
 
 /**
- * Fixed mobile tab bar. The user app's 4 tabs (Home / Booking / Wallet /
- * Support) use a "squircle" icon-button treatment — a soft glass chip when
- * idle, a gold-to-orange gradient with a glow when active — for a premium,
- * app-like feel rather than a flat icon-and-label row. Hidden on large
- * screens where the sidebar already covers navigation.
+ * Fixed mobile tab bar. The user app's 5 tabs (Home / Offer / Booking /
+ * Wallet / Support) use a "squircle" icon-button treatment — a soft glass
+ * chip when idle, a gold-to-orange gradient with a glow when active — for a
+ * premium, app-like feel. "Booking" (the item flagged `raised` in
+ * nav-items.ts) renders as an oversized floating button that pokes above
+ * the bar, always gold, like a primary action. Hidden on large screens
+ * where the sidebar already covers navigation.
  */
 export function BottomNav({
   navKind,
@@ -35,6 +37,29 @@ export function BottomNav({
       {items.map((item) => {
         const active = pathname === item.href || pathname.startsWith(item.href + "/");
         const Icon = item.icon;
+
+        if (dark && item.raised) {
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex flex-1 flex-col items-center justify-center gap-1 py-2.5 text-[11px] font-medium"
+            >
+              <span
+                className={cn(
+                  "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-500 to-[#ff9135] text-navy-950 ring-[5px] ring-navy-950 transition-transform active:scale-90",
+                  "shadow-[0_10px_24px_rgba(201,152,47,0.55)]"
+                )}
+              >
+                <Icon className="h-6 w-6" />
+              </span>
+              <span className={cn("mt-0.5", active ? "font-semibold text-gold-400" : "text-cloud-300")}>
+                {item.label}
+              </span>
+            </Link>
+          );
+        }
+
         return (
           <Link
             key={item.href}
@@ -79,8 +104,8 @@ export function BottomNav({
           </Link>
         );
       })}
-      {/* The user app's 4 tabs already cover everything — the header's
-          hamburger opens the same full drawer, so a second "More" tab here
+      {/* The user app's 5 tabs already cover everything — the header's menu
+          button opens the same full drawer, so a second "More" tab here
           would just be a duplicate. Admin keeps it since its bottom nav is
           a short subset of a much longer sidebar. */}
       {navKind === "admin" && (
