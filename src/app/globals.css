@@ -130,11 +130,20 @@
   border-color: var(--border);
 }
 
+html {
+  /* Stops the page from "rubber-banding" past its own top/bottom on
+     touch devices — that bounce is what was exposing a plain white strip
+     above the header on scroll, since the page behind it (this element)
+     never matches whatever dark/light theme the current screen uses. */
+  overscroll-behavior-y: none;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
 }
 
 .font-display {
