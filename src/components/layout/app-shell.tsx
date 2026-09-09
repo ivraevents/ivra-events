@@ -11,7 +11,6 @@ import { createClient } from "@/lib/supabase/client";
 import { NotificationBell } from "./notification-bell";
 import { BottomNav } from "./bottom-nav";
 import { InstallAppButton } from "./install-app-button";
-import { HeaderSearch } from "./header-search";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { LanguageSwitcher } from "@/components/marketing/language-switcher";
 
@@ -163,11 +162,14 @@ export function AppShell({
           // User app header: dark, branded, and built from a consistent set
           // of premium pill/circle icon buttons — hamburger for the full
           // menu, the logo (compact mark on mobile, full wordmark on
-          // desktop), the global search, language, notifications, and the
-          // avatar. No account dropdown — Profile is one tap from the
-          // avatar, and Sign out lives at the bottom of the Profile page
-          // instead, so there's only ever one way to reach either, and only
-          // one way to change language (here, not duplicated in the drawer).
+          // desktop), language, notifications, and the avatar. Search moved
+          // down onto the Home screen itself, right under the greeting,
+          // where it's much more obvious than a small box up here — so it's
+          // not duplicated in both places. No account dropdown — Profile is
+          // one tap from the avatar, and Sign out lives at the bottom of
+          // the Profile page instead, so there's only ever one way to reach
+          // either, and only one way to change language (here, not
+          // duplicated in the drawer).
           <header className="sticky top-0 z-30 flex h-16 items-center gap-2.5 border-b border-navy-800 bg-navy-950 px-4 sm:gap-3 sm:px-6">
             <button
               className="shrink-0 rounded-full p-2 text-cloud-300 transition-colors hover:bg-white/10 lg:hidden"
@@ -182,7 +184,7 @@ export function AppShell({
             <div className="hidden shrink-0 lg:block">
               <Logo dark size={26} />
             </div>
-            <HeaderSearch />
+            <div className="flex-1" />
             <LanguageSwitcher variant="dark" compact />
             <NotificationBell dark />
             <Link

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<title>IVRA Events — Stall Selection Preview</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f1f2f6;color:#2b2e38;font-family:Inter,Arial,sans-serif;padding-bottom:110px}
+  .header{background:#fff;border-bottom:1px solid #e6e8ef;padding:16px 18px}
+  .back{display:inline-flex;align-items:center;gap:6px;color:#545a6b;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:10px}
+  .header h1{margin:0;font-size:18px;font-family:Georgia,serif;color:#041a0d}
+  .header p{margin:4px 0 0;font-size:12px;color:#545a6b}
+  .wrap{max-width:760px;margin:auto;padding:18px 15px}
+  .note{background:#e6effc;border:1px solid #b9d3f5;color:#2568c9;border-radius:12px;padding:10px 14px;font-size:11px;line-height:1.5;margin-bottom:18px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:#545a6b;margin-bottom:14px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .swatch{width:12px;height:12px;border-radius:4px;border:1.5px solid}
+  .sw-avail{background:#e2f5ec;border-color:#147a4f}
+  .sw-reserved{background:#fdf1dc;border-color:#ad6c05}
+  .sw-confirmed{background:#e6effc;border-color:#2568c9}
+  .sw-occupied{background:#e6e8ef;border-color:#8b92a3}
+  .panel{background:#f8f9fb;border:1px solid #e6e8ef;border-radius:16px;padding:16px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media(min-width:520px){.grid{grid-template-columns:repeat(4,1fr)}}
+  @media(min-width:700px){.grid{grid-template-columns:repeat(6,1fr)}}
+  .stall{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:12px;border:2px solid;padding:12px 4px;font-size:12px;font-weight:700}
+  .avail{background:#e2f5ec;border-color:#147a4f;color:#147a4f;cursor:pointer}
+  .avail:hover{background:#147a4f;color:#fff}
+  .reserved{background:#fdf1dc;border-color:#ad6c05;color:#ad6c05}
+  .confirmed{background:#e6effc;border-color:#2568c9;color:#2568c9}
+  .occupied{background:#e6e8ef;border-color:#8b92a3;color:#8b92a3}
+  .selected{background:#041a0d;border-color:#c9982f;color:#fff;box-shadow:0 0 0 3px rgba(201,152,47,.35)}
+  .price{font-weight:500;font-size:10px;opacity:.85}
+  .checkmark{position:relative}
+  .checkmark:after{content:"✓";position:absolute;top:-9px;right:-6px;width:16px;height:16px;background:#c9982f;color:#041a0d;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:900}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#041a0d;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+  .bar-info small{display:block;color:#8b92a3;font-size:10px}
+  .bar-info strong{display:block;color:#fff;font-size:15px;font-family:Georgia,serif}
+  .bar button{border:none;border-radius:12px;padding:13px 20px;font-size:12px;font-weight:800;background:linear-gradient(100deg,#c9982f,#ff9135);color:#041a0d;white-space:nowrap}
+  .footnote{max-width:760px;margin:16px auto 0;padding:0 15px;font-size:11px;color:#8b92a3;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap" style="padding:0">
+    <a class="back" href="#">← Back to event</a>
+    <h1>Navrathan Diwali Flea Market</h1>
+    <p>Palace Grounds, Bengaluru · Select your stall below</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="note">Preview only — sample stall map with made-up numbers and statuses, styled exactly like the real booking screen. Your live event will show its actual stalls, sizes and prices.</div>
+
+  <div class="legend">
+    <span><i class="swatch sw-avail"></i>Available</span>
+    <span><i class="swatch sw-reserved"></i>Reserved / On hold</span>
+    <span><i class="swatch sw-confirmed"></i>Confirmed</span>
+    <span><i class="swatch sw-occupied"></i>Occupied</span>
+  </div>
+
+  <div class="panel">
+    <div class="grid">
+      <div class="stall avail"><span>A1</span><span class="price">₹1,499</span></div>
+      <div class="stall avail"><span>A2</span><span class="price">₹1,499</span></div>
+      <div class="stall occupied"><span>A3</span><span class="price">₹1,499</span></div>
+      <div class="stall avail"><span>A4</span><span class="price">₹1,499</span></div>
+      <div class="stall selected checkmark"><span>A5</span><span class="price">₹1,499</span></div>
+      <div class="stall avail"><span>A6</span><span class="price">₹1,499</span></div>
+
+      <div class="stall reserved"><span>B1</span><span class="price">₹2,499</span></div>
+      <div class="stall avail"><span>B2</span><span class="price">₹2,499</span></div>
+      <div class="stall avail"><span>B3</span><span class="price">₹2,499</span></div>
+      <div class="stall confirmed"><span>B4</span><span class="price">₹2,499</span></div>
+      <div class="stall avail"><span>B5</span><span class="price">₹2,499</span></div>
+      <div class="stall occupied"><span>B6</span><span class="price">₹2,499</span></div>
+
+      <div class="stall avail"><span>C1</span><span class="price">₹1,499</span></div>
+      <div class="stall avail"><span>C2</span><span class="price">₹1,499</span></div>
+      <div class="stall reserved"><span>C3</span><span class="price">₹1,499</span></div>
+      <div class="stall avail"><span>C4</span><span class="price">₹1,499</span></div>
+      <div class="stall avail"><span>C5</span><span class="price">₹1,499</span></div>
+      <div class="stall confirmed"><span>C6</span><span class="price">₹1,499</span></div>
+    </div>
+  </div>
+
+  <p class="footnote">Tap any green stall to select it — grey (occupied), amber (reserved) and blue (confirmed) stalls can't be booked.</p>
+</main>
+
+<div class="bar">
+  <div class="bar-info">
+    <small>Selected — Stall A5 · Half Stall</small>
+    <strong>₹1,499</strong>
+  </div>
+  <button>Continue to Payment →</button>
+</div>
+
+</body>
+</html>

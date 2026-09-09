@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { HomeHeader } from "@/components/dashboard/home-header";
 import { HomeMarkets, type EventPricing } from "@/components/dashboard/home-markets";
 import { HomeInstagramCard } from "@/components/dashboard/home-instagram-card";
-import { HomeStatistics } from "@/components/dashboard/home-statistics";
+import { HomeTrustStrip } from "@/components/dashboard/home-trust-strip";
 import type { EventListing } from "@/types/domain";
 
 export default async function DashboardPage() {
@@ -42,14 +42,16 @@ export default async function DashboardPage() {
     }
   }
 
-  // "Our Statistics" section — every number is a real, live count pulled
-  // from the public event listing view (no marketing placeholders).
-  const { data: statsData } = await supabase.from("event_listing_v").select("city, total_stalls, available_stalls");
-  const statsRows = (statsData ?? []) as Array<{ city: string | null; total_stalls: number; available_stalls: number }>;
-  const eventsCount = statsRows.length;
-  const citiesCount = new Set(statsRows.map((r) => r.city).filter(Boolean)).size;
+  // Trust strip — every number is a real, live count (no marketing
+  // placeholders): stalls + stalls booked come straight from the public
+  // event listing, verified customers from a SECURITY DEFINER RPC (0028)
+  // since the underlying registrations table is select-own only.
+  const { data: statsData } = await supabase.from("event_listing_v").select("total_stalls, available_stalls");
+  const statsRows = (statsData ?? []) as Array<{ total_stalls: number; available_stalls: number }>;
   const totalStalls = statsRows.reduce((sum, r) => sum + (r.total_stalls ?? 0), 0);
   const stallsBooked = statsRows.reduce((sum, r) => sum + ((r.total_stalls ?? 0) - (r.available_stalls ?? 0)), 0);
+
+  const { data: verifiedCustomers } = await supabase.rpc("get_verified_customer_count");
 
   const hour = Number(
     new Date().toLocaleString("en-IN", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" })
@@ -61,10 +63,9 @@ export default async function DashboardPage() {
       <HomeHeader greetingKey={greetingKey} firstName={firstName} />
       <HomeMarkets events={events} pricing={pricing} />
       <HomeInstagramCard />
-      <HomeStatistics
-        eventsCount={eventsCount}
-        citiesCount={citiesCount}
+      <HomeTrustStrip
         totalStalls={totalStalls}
+        verifiedCustomers={verifiedCustomers ?? 0}
         stallsBooked={stallsBooked}
       />
     </div>
