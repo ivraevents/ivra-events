@@ -127,17 +127,25 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
 
                   <div className="p-4">
                     <p className="font-display text-base font-bold leading-snug text-white">{event.name}</p>
-                    <p className="mt-2 flex items-center gap-1.5 text-[11px] text-cloud-300">
-                      <CalendarDays className="h-3 w-3 shrink-0" /> {dateRangeLabel(event)}
+                    <p className="mt-3 flex items-center gap-2.5 text-[11px] text-cloud-300">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-navy-800">
+                        <CalendarDays className="h-3.5 w-3.5" />
+                      </span>
+                      {dateRangeLabel(event)}
                     </p>
                     {(event.venue || event.city) && (
-                      <p className="mt-1 flex items-center gap-1.5 text-[11px] text-cloud-300">
-                        <MapPin className="h-3 w-3 shrink-0" /> {[event.venue, event.city].filter(Boolean).join(", ")}
+                      <p className="mt-2 flex items-center gap-2.5 text-[11px] text-cloud-300">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-navy-800">
+                          <MapPin className="h-3.5 w-3.5" />
+                        </span>
+                        {[event.venue, event.city].filter(Boolean).join(", ")}
                       </p>
                     )}
-                    <p className="mt-1 flex items-center gap-1.5 text-[11px] text-cloud-300">
-                      <Users className="h-3 w-3 shrink-0" /> {event.available_stalls} of {event.total_stalls} stalls
-                      available
+                    <p className="mt-2 flex items-center gap-2.5 text-[11px] text-cloud-300">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-navy-800">
+                        <Users className="h-3.5 w-3.5" />
+                      </span>
+                      {event.available_stalls} of {event.total_stalls} stalls available
                     </p>
 
                     {(price?.half != null || price?.full != null) && (

@@ -136,7 +136,7 @@ export const adminNav: NavSection[] = [
 export const userBottomNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: Home },
   { label: "Wallet", href: "/wallet", icon: Wallet },
-  { label: "Bookings", href: "/bookings", icon: Store },
+  { label: "Booking History", href: "/bookings", icon: Store },
   { label: "Support", href: "/support", icon: LifeBuoy },
 ];
 
