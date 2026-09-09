@@ -135,8 +135,8 @@ export const adminNav: NavSection[] = [
 // tab, so it isn't duplicated here either.
 export const userBottomNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Booking", href: "/bookings", icon: Store },
   { label: "Wallet", href: "/wallet", icon: Wallet },
-  { label: "Booking History", href: "/bookings", icon: Store },
   { label: "Support", href: "/support", icon: LifeBuoy },
 ];
 
