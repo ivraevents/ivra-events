@@ -31,7 +31,10 @@ function dateRangeLabel(event: EventListing) {
 
 function statusMeta(status: string) {
   if (status === "registration_open") return { label: "Booking Open", tone: "bg-[#43e59a]" };
-  return { label: "Opening Soon", tone: "bg-[#ffd83d]" };
+  // Deliberately neutral (not the green "open" color) — this is a pending
+  // state, not a second "go" signal, so it needs to read as visually
+  // different from "Booking Open".
+  return { label: "Opening Soon", tone: "bg-[#a2a5a8]" };
 }
 
 /**
@@ -71,7 +74,7 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
                   "shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-xs font-medium transition-colors",
                   city === c
                     ? "border-white bg-white text-[#08090a]"
-                    : "border-[#242629] bg-[#131518] text-[#a2a5a8] hover:border-[#ffd83d]/50"
+                    : "border-[#242629] bg-[#131518] text-[#a2a5a8] hover:border-[#43e59a]/50"
                 )}
               >
                 {c}
@@ -84,7 +87,7 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
       <div>
         <div className="flex items-center justify-between">
           <h2 className="font-display text-base font-semibold text-white">Upcoming Markets 🔥</h2>
-          <Link href="/events" className="text-xs font-semibold text-[#ffd83d]">
+          <Link href="/events" className="text-xs font-semibold text-[#43e59a]">
             See all →
           </Link>
         </div>
@@ -113,7 +116,7 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
                     )}
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
                     <div className="absolute left-3 top-3 flex flex-col items-center rounded-xl border border-white/15 bg-black/70 px-2.5 py-1.5 leading-none">
-                      <span className="text-[8px] font-bold uppercase tracking-wide text-[#ffd83d]">{badge.month}</span>
+                      <span className="text-[8px] font-bold uppercase tracking-wide text-[#43e59a]">{badge.month}</span>
                       <span className="text-lg font-bold text-white">{badge.day}</span>
                       <span className="text-[7px] text-[#a2a5a8]">{badge.weekday}</span>
                     </div>
@@ -179,7 +182,7 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
                       </Link>
                       <Link
                         href={`/events/${event.slug}`}
-                        className="flex h-11 items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-xs font-bold text-[#08090a]"
+                        className="flex h-11 items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e] text-xs font-bold text-[#08090a]"
                       >
                         BOOK IT <ArrowRight className="h-3.5 w-3.5" />
                       </Link>

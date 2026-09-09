@@ -169,12 +169,15 @@ export function AppShell({
           // places. The avatar goes straight to Profile; sign out lives at
           // the bottom of that page, and language only lives here, not the
           // drawer too.
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-[#242629] bg-[#08090a] px-4 sm:px-6">
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-[#242629] bg-[#101214] px-4 sm:px-6">
             {/* Clean, neutral ambient depth — no color wash, just two very
                 faint soft-white glows, closer to the calm dark backdrop of
                 the Navrathan reference than the earlier gold-tinted one. No
                 overflow-hidden on the header itself — that would clip the
-                language/notification dropdowns that pop out below it. */}
+                language/notification dropdowns that pop out below it. A
+                slightly lighter "chrome" tone than the page body below it
+                (and the bottom bar) so header / content / footer each read
+                as a distinct layer instead of blending into one slab. */}
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
               <div className="absolute -left-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-white/[0.05] blur-3xl [animation-duration:7s]" />
               <div className="absolute -right-10 -top-16 h-40 w-40 animate-pulse rounded-full bg-white/[0.04] blur-3xl [animation-duration:9s]" />
@@ -183,12 +186,12 @@ export function AppShell({
               type="button"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 hover:text-white active:scale-95"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-[#c7cacd] shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 hover:text-white active:scale-95"
             >
-              <Menu className="h-[18px] w-[18px]" />
+              <Menu className="h-4 w-4" />
             </button>
             <span className="truncate font-display text-base font-bold tracking-wide text-white sm:text-lg">
-              IVRA <span className="text-[#ffd83d]">EVENTS</span>
+              IVRA <span className="text-[#43e59a]">EVENTS</span>
             </span>
             <div className="flex-1" />
             <LanguageSwitcher variant="dark" compact />
@@ -196,13 +199,24 @@ export function AppShell({
             <Link
               href="/profile"
               aria-label="Profile"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-sm font-bold text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 active:scale-95"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-xs font-bold text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10 active:scale-95"
             >
               {userLabel.charAt(0).toUpperCase()}
             </Link>
           </header>
         )}
-        <main className="flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">{children}</main>
+        <main
+          className={cn(
+            "flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8",
+            // Same fix as the header: an explicit dark background here means
+            // this scroll area never shows a lighter default background
+            // through the gap below short page content, above the bottom
+            // bar.
+            navKind === "user" && "bg-[#08090a]"
+          )}
+        >
+          {children}
+        </main>
       </div>
 
       <BottomNav navKind={navKind} onMore={() => setMobileOpen(true)} />

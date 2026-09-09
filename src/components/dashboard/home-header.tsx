@@ -44,7 +44,7 @@ export function HomeHeader({
         {t(`dashboard.greeting.${greetingKey}`)}
         {firstName ? (
           <>
-            , <span className="text-[#ffd83d]">{firstName}</span>
+            , <span className="text-[#43e59a]">{firstName}</span>
           </>
         ) : null}{" "}
         <span aria-hidden>👋</span>
@@ -53,21 +53,21 @@ export function HomeHeader({
 
       <form
         onSubmit={onSubmit}
-        className="mt-5 flex items-center gap-2.5 rounded-2xl bg-[#e9ebed] py-1 pl-4 pr-1.5 shadow-[0_14px_34px_rgba(0,0,0,0.3)]"
+        className="mt-5 flex items-center gap-2 rounded-2xl bg-[#e9ebed] py-1 pl-4 pr-1 shadow-[0_14px_34px_rgba(0,0,0,0.3)]"
       >
-        <Search className="h-[18px] w-[18px] shrink-0 text-[#131518]/60" />
+        <Search className="h-4 w-4 shrink-0 text-[#131518]/60" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("dashboard.searchPlaceholder")}
-          className="h-[52px] w-full min-w-0 bg-transparent text-sm text-[#08090a] placeholder:text-[#75797d] focus:outline-none"
+          className="h-12 w-full min-w-0 bg-transparent text-sm text-[#08090a] placeholder:text-[#75797d] focus:outline-none"
         />
         <button
           type="submit"
           aria-label="Search"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] shadow-[0_4px_14px_rgba(255,178,61,0.45)] transition-transform active:scale-95"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e] text-[#08090a] shadow-[0_4px_14px_rgba(67,229,154,0.4)] transition-transform active:scale-95"
         >
-          <Search className="h-[18px] w-[18px]" />
+          <Search className="h-4 w-4" />
         </button>
       </form>
     </div>

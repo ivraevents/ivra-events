@@ -9,11 +9,13 @@ import { userBottomNav, adminBottomNav } from "./nav-items";
 /**
  * Fixed mobile tab bar. The user app's 5 tabs (Home / Offer / Booking /
  * Wallet / Support) use a "squircle" icon-button treatment — a soft glass
- * chip when idle, a gold-to-orange gradient with a glow when active — for a
- * premium, app-like feel. "Booking" (the item flagged `raised` in
- * nav-items.ts) renders as an oversized floating button that pokes above
- * the bar, always gold, like a primary action. Hidden on large screens
- * where the sidebar already covers navigation.
+ * chip when idle, a green gradient with a glow when active — for a premium,
+ * app-like feel. "Booking" (the item flagged `raised` in nav-items.ts)
+ * renders as an oversized floating button that pokes above the bar, always
+ * green, like a primary action. The bar itself uses a slightly lighter
+ * "chrome" tone than the page body above it, so it reads as a distinct
+ * footer layer instead of blending into the content. Hidden on large
+ * screens where the sidebar already covers navigation.
  */
 export function BottomNav({
   navKind,
@@ -30,7 +32,7 @@ export function BottomNav({
     <nav
       className={cn(
         "fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t pb-[env(safe-area-inset-bottom)] lg:hidden",
-        dark ? "border-[#242629] bg-[#08090a]/95 backdrop-blur-xl" : "border-border bg-surface"
+        dark ? "border-[#242629] bg-[#101214]/95 backdrop-blur-xl" : "border-border bg-surface"
       )}
       aria-label="Primary"
     >
@@ -47,13 +49,13 @@ export function BottomNav({
             >
               <span
                 className={cn(
-                  "-mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] ring-[5px] ring-[#08090a] transition-transform active:scale-90",
-                  "shadow-[0_6px_16px_rgba(255,216,61,0.35)]"
+                  "-mt-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e] text-[#08090a] ring-[3px] ring-[#101214] transition-transform active:scale-90",
+                  "shadow-[0_6px_16px_rgba(67,229,154,0.3)]"
                 )}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className="h-[18px] w-[18px]" />
               </span>
-              <span className={cn("mt-0.5", active ? "font-semibold text-[#ffd83d]" : "text-[#a2a5a8]")}>
+              <span className={cn("mt-0.5", active ? "font-semibold text-[#43e59a]" : "text-[#a2a5a8]")}>
                 {item.label}
               </span>
             </Link>
@@ -69,13 +71,13 @@ export function BottomNav({
             {dark ? (
               <span
                 className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-2xl border transition-all duration-200 active:scale-90",
+                  "flex h-9 w-9 items-center justify-center rounded-2xl border transition-all duration-200 active:scale-90",
                   active
-                    ? "border-transparent bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] text-[#08090a] shadow-[0_4px_12px_rgba(255,216,61,0.3)] -translate-y-0.5"
+                    ? "border-transparent bg-gradient-to-br from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e] text-[#08090a] shadow-[0_3px_10px_rgba(67,229,154,0.25)] -translate-y-0.5"
                     : "border-white/5 bg-white/[0.04] text-[#a2a5a8]"
                 )}
               >
-                <Icon className="h-[17px] w-[17px]" />
+                <Icon className="h-[15px] w-[15px]" />
               </span>
             ) : (
               <span
@@ -92,7 +94,7 @@ export function BottomNav({
                 "transition-colors",
                 active
                   ? dark
-                    ? "font-semibold text-[#ffd83d]"
+                    ? "font-semibold text-[#43e59a]"
                     : "font-semibold text-navy-900"
                   : dark
                     ? "text-[#a2a5a8]"

@@ -29,14 +29,14 @@ function StatCard({ icon: Icon, target, label }: { icon: LucideIcon; target: num
   const value = useCountUp(target);
   return (
     <div className="flex flex-col items-center gap-2 rounded-2xl border border-[#242629] bg-[#131518] px-3 py-4 text-center">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#ffd83d]/25 bg-[#ffd83d]/10">
-        <Icon className="h-4 w-4 text-[#ffd83d]" />
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#43e59a]/25 bg-[#43e59a]/10">
+        <Icon className="h-4 w-4 text-[#43e59a]" />
       </span>
       <span className="font-display text-xl font-black tracking-tight text-white">
         {value.toLocaleString("en-IN")}
         {target > 0 && "+"}
       </span>
-      <span className="h-0.5 w-5 rounded-full bg-gradient-to-r from-[#ffe873] via-[#ffb23d] to-[#ff6a3d]" />
+      <span className="h-0.5 w-5 rounded-full bg-gradient-to-r from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e]" />
       <span className="text-[10px] font-medium leading-tight text-[#75797d]">{label}</span>
     </div>
   );
@@ -60,11 +60,11 @@ export function HomeStatistics() {
   return (
     <div>
       <div className="flex flex-col items-center text-center">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ffd83d]/25 bg-[#ffd83d]/10 px-3 py-1 text-[10px] font-semibold text-[#ffd83d]">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#43e59a]/25 bg-[#43e59a]/10 px-3 py-1 text-[10px] font-semibold text-[#43e59a]">
           📊 Trusted by Thousands
         </span>
         <h2 className="mt-2.5 font-display text-xl font-bold text-white">
-          Our <span className="text-[#ffd83d]">Statistics</span>
+          Our <span className="text-[#43e59a]">Statistics</span>
         </h2>
         <p className="mt-1 text-xs text-[#a2a5a8]">Connecting vendors with events across India</p>
       </div>

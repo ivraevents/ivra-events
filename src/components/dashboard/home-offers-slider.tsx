@@ -37,7 +37,7 @@ export function HomeOffersSlider() {
   return (
     <div>
       <div className="flex items-center gap-1.5">
-        <Gift className="h-4 w-4 text-[#ffd83d]" />
+        <Gift className="h-4 w-4 text-[#43e59a]" />
         <h2 className="font-display text-base font-semibold text-white">Offers Running</h2>
       </div>
 
@@ -58,15 +58,15 @@ export function HomeOffersSlider() {
           >
             {/* Decorative code-drawn backdrop, not a stock photo. */}
             <div aria-hidden className="pointer-events-none absolute inset-0">
-              <div className="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-[#ffe873]/20 via-[#ffb23d]/10 to-transparent blur-2xl" />
+              <div className="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-[#8ff5c4]/20 via-[#43e59a]/10 to-transparent blur-2xl" />
               <Gift className="absolute -bottom-4 -right-4 h-24 w-24 text-white/[0.04]" />
             </div>
 
             <div className="relative flex items-start justify-between">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-[#ffd83d]">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-[#43e59a]">
                 {s.date} · {s.day}
               </p>
-              <span className="flex items-center gap-1 rounded-full bg-gradient-to-br from-[#ffe873] via-[#ffb23d] to-[#ff6a3d] px-2.5 py-1 text-[9px] font-bold text-[#08090a]">
+              <span className="flex items-center gap-1 rounded-full bg-gradient-to-br from-[#8ff5c4] via-[#43e59a] to-[#0e9f6e] px-2.5 py-1 text-[9px] font-bold text-[#08090a]">
                 <Gift className="h-3 w-3" /> OFFER
               </span>
             </div>
@@ -91,7 +91,7 @@ export function HomeOffersSlider() {
             key={s.key}
             className={cn(
               "h-1.5 rounded-full transition-all",
-              i === index ? "w-4 bg-[#ffd83d]" : "w-1.5 bg-white/15"
+              i === index ? "w-4 bg-[#43e59a]" : "w-1.5 bg-white/15"
             )}
           />
         ))}
