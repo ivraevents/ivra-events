@@ -38,6 +38,9 @@ export function EventCard({ event }: { event: EventListing }) {
           </span>
           <span className="font-semibold text-gold-600">From {formatPaise(event.starting_price_paise)}</span>
         </div>
+        {event.expected_crowd && (
+          <p className="text-xs text-muted-foreground">Expected crowd: {event.expected_crowd}</p>
+        )}
         <Button asChild className="mt-auto">
           <Link href={`/events/${event.slug}`}>View Stalls</Link>
         </Button>

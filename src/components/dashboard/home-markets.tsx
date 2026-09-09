@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { MapPin, CalendarDays, Users, ArrowUpRight, ArrowRight } from "lucide-react";
+import { MapPin, CalendarDays, Users, ArrowUpRight, ArrowRight, Navigation } from "lucide-react";
 import { cn, formatPaise } from "@/lib/utils";
 import type { EventListing } from "@/types/domain";
 
@@ -141,7 +141,18 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#191b1e]">
                           <MapPin className="h-3.5 w-3.5" />
                         </span>
-                        {[event.venue, event.city].filter(Boolean).join(", ")}
+                        <span className="flex-1">{[event.venue, event.city].filter(Boolean).join(", ")}</span>
+                        {event.maps_url && (
+                          <a
+                            href={event.maps_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center gap-1 whitespace-nowrap rounded-full border border-[#43e59a]/25 bg-[#43e59a]/10 px-2 py-0.5 text-[10px] font-semibold text-[#43e59a]"
+                          >
+                            <Navigation className="h-2.5 w-2.5" /> Directions
+                          </a>
+                        )}
                       </p>
                     )}
                     <p className="mt-2 flex items-center gap-2.5 text-[11px] text-[#a2a5a8]">
@@ -149,6 +160,9 @@ export function HomeMarkets({ events, pricing }: { events: EventListing[]; prici
                         <Users className="h-3.5 w-3.5" />
                       </span>
                       {event.available_stalls} of {event.total_stalls} stalls available
+                      {event.expected_crowd && (
+                        <span className="text-[#75797d]">· {event.expected_crowd} expected</span>
+                      )}
                     </p>
 
                     {(price?.half != null || price?.full != null) && (

@@ -39,7 +39,13 @@ export default async function AdminEventDetailPage({ params }: { params: Promise
         </TabsList>
 
         <TabsContent value="details">
-          <Card><CardContent><EventEditForm event={event} /></CardContent></Card>
+          <Card><CardContent>
+            <EventEditForm
+              event={event}
+              stalls={(stalls as unknown as Stall[])?.map((s) => ({ id: s.id, stall_type_id: s.stall_type_id, status: s.status })) ?? []}
+              stallTypes={(stallTypes as StallType[])?.map((t) => ({ id: t.id, size_type: t.size_type, monopoly_type: t.monopoly_type, price_paise: t.price_paise })) ?? []}
+            />
+          </CardContent></Card>
         </TabsContent>
 
         <TabsContent value="stall-types">

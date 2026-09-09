@@ -21,7 +21,7 @@ export default async function AdminStallsPage() {
   const supabase = await createClient();
 
   const [{ data: events }, { data: stallTypes }, { data: stalls }] = await Promise.all([
-    supabase.from("events").select("id, name, status").order("event_date", { ascending: false }),
+    supabase.from("events").select("id, name, status, stall_mode").order("event_date", { ascending: false }),
     supabase.from("stall_types").select("*").order("price_paise"),
     supabase.from("stalls").select("id, event_id, stall_type_id, status"),
   ]);
@@ -62,12 +62,17 @@ export default async function AdminStallsPage() {
             return (
               <div key={event.id} className="rounded-[var(--radius-lg)] border border-border p-4">
                 <div className="flex items-center justify-between gap-3">
-                  <Link
-                    href={`/admin/events/${event.id}`}
-                    className="font-display text-lg font-semibold text-navy-900 hover:text-royal-600"
-                  >
-                    {event.name}
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/admin/events/${event.id}`}
+                      className="font-display text-lg font-semibold text-navy-900 hover:text-royal-600"
+                    >
+                      {event.name}
+                    </Link>
+                    <Badge tone={event.stall_mode === "unfixed" ? "info" : "neutral"}>
+                      {event.stall_mode === "unfixed" ? "Unfixed" : "Fixed"}
+                    </Badge>
+                  </div>
                   <Link href={`/admin/events/${event.id}`} className="text-xs font-medium text-royal-600">
                     Manage stalls →
                   </Link>
@@ -86,7 +91,9 @@ export default async function AdminStallsPage() {
                         <p className="text-xs text-muted-foreground">
                           {inventory.length > 0
                             ? `${available} of ${inventory.length} stalls available`
-                            : "No stalls generated yet"}
+                            : event.stall_mode === "unfixed"
+                              ? "Shared capacity — see event page for remaining count"
+                              : "No stalls generated yet"}
                         </p>
                       </div>
                     );

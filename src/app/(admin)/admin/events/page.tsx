@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeader, EmptyState } from "@/components/ui/misc";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
-import { StatusPill } from "@/components/ui/badge";
+import { StatusPill, Badge } from "@/components/ui/badge";
 import { NewEventDialog } from "./new-event-dialog";
 import { DuplicateEventButton } from "./duplicate-button";
 import { formatDate } from "@/lib/utils";
@@ -23,7 +23,7 @@ export default async function AdminEventsPage() {
       ) : (
         <Table>
           <THead>
-            <TR><TH>Name</TH><TH>Date</TH><TH>City</TH><TH>Stalls</TH><TH>Status</TH><TH /></TR>
+            <TR><TH>Name</TH><TH>Date</TH><TH>City</TH><TH>Stall Type</TH><TH>Stalls</TH><TH>Status</TH><TH /></TR>
           </THead>
           <TBody>
             {events.map((e) => (
@@ -33,6 +33,7 @@ export default async function AdminEventsPage() {
                 </TD>
                 <TD>{formatDate(e.event_date)}</TD>
                 <TD>{e.city}</TD>
+                <TD><Badge tone={e.stall_mode === "unfixed" ? "info" : "neutral"}>{e.stall_mode === "unfixed" ? "Unfixed" : "Fixed"}</Badge></TD>
                 <TD>{e.available_stalls} / {e.total_stalls} available</TD>
                 <TD><StatusPill status={e.status} /></TD>
                 <TD><DuplicateEventButton eventId={e.id} /></TD>

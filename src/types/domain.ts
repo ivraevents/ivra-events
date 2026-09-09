@@ -28,6 +28,12 @@ export type TicketPriority = "low" | "normal" | "high" | "urgent";
 export type TicketCategory =
   | "booking" | "stall" | "payment" | "invoice" | "document" | "account" | "coupon" | "event" | "other";
 export type RoleKey = "user" | "vendor" | "canopy_provider" | "game_provider" | "admin" | "support_manager" | "support_agent";
+/** 'fixed' = admin pre-generates an exact count of numbered half/full
+ *  stalls (existing Stall Types + Stall Inventory tabs). 'unfixed' = admin
+ *  sets one Total Stall Capacity in half-stall-equivalent units plus a
+ *  flat Half/Full price; individual stalls are minted on demand as
+ *  bookings come in (see reserve_open_stall in 0030_open_stall_capacity.sql). */
+export type EventStallMode = "fixed" | "unfixed";
 
 export interface EventListing {
   id: string;
@@ -38,6 +44,13 @@ export interface EventListing {
   venue: string | null;
   address: string | null;
   city: string | null;
+  maps_url: string | null;
+  expected_crowd: string | null;
+  stall_mode: EventStallMode;
+  /** Unfixed mode only — total capacity in half-stall-equivalent units. */
+  total_stall_capacity: number | null;
+  /** Unfixed mode only — capacity units a Full stall consumes (Half always costs 1). */
+  full_stall_unit_ratio: number;
   event_date: string;
   end_date: string | null;
   start_time: string | null;
@@ -48,6 +61,8 @@ export interface EventListing {
   total_stalls: number;
   available_stalls: number;
   starting_price_paise: number | null;
+  half_stall_price_paise: number | null;
+  full_stall_price_paise: number | null;
 }
 
 export interface StallType {
